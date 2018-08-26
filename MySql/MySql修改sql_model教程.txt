@@ -1,0 +1,6 @@
+修改配置文件默认加载路径
+my.ini 修改sql_mode
+1.打开注册表https://blog.csdn.net/cuijia1234/article/details/56276560
+2.修改ImagePath参数 http://www.cnblogs.com/advocate/p/3433243.html 格式完全参照实例，需对原来的文件加上引号
+3.修改my.ini配置文件
+4.重启MySql

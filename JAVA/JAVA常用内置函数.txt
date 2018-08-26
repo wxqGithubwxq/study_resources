@@ -1,0 +1,5 @@
+1.Arrary.subList()
+https://www.cnblogs.com/ljdblog/p/6251387.html
+
+2.incrementAndGet() 和getAndIncrement()两个方法定义都是一样的
+自动加一进行原子操作

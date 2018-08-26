@@ -1,0 +1,7 @@
+1.redis-cli.exe -h 127.0.0.1 -p 6379 启动客户端
+2.auth password 密码登入
+3.set key value [EX seconds] [PX milliseconds] [NX|XX]赋key和value值
+4.get key 获取key的value值
+5.卸载服务：redis-server --service-uninstall
+6.开启服务：redis-server --service-start
+7.停止服务：redis-server --service-stop

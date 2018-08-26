@@ -1,0 +1,14 @@
+1.html和jsp的区别--静态页面和动态页面的区别
+https://blog.csdn.net/xuaman/article/details/69390301
+https://www.cnblogs.com/iOS-mt/p/5649467.html
+https://blog.csdn.net/abubu123/article/details/52397252
+
+2.WEB安全实战--防止浏览器记住用户名和密码
+https://blog.csdn.net/one_girl/article/details/79392674
+
+3.通过cookie实现记住密码(需要在过滤器中调用方法)
+https://blog.csdn.net/k_122/article/details/76101744
+
+4.通过localStorage实现永久性的记住密码功能
+
+5.EL表达式和OGNL表达式

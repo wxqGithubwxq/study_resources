@@ -1,0 +1,5 @@
+1.window.location
+https://blog.csdn.net/qq_27093465/article/details/50731087
+
+2.type="application/javascript"ºÍtype="text/javascript"Çø±ð
+https://blog.csdn.net/killzero/article/details/17786541

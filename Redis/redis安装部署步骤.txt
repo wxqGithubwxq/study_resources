@@ -1,0 +1,10 @@
+windows10 redis安装部署
+https://blog.csdn.net/qq_33333654/article/details/79393968
+
+
+redis 修改密码和更改端口号
+https://blog.csdn.net/sxf359/article/details/73198084
+https://blog.csdn.net/qiumen/article/details/78461785 设置密码无效解决办法
+
+redis客户端安装
+https://blog.csdn.net/u010935342/article/details/53112392

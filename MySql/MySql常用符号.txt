@@ -1,0 +1,5 @@
+1.DELIMITER 
+https://www.cnblogs.com/nickup/p/6628892.html
+
+2.浅谈SQL Server、MySQL中char，varchar，nchar，nvarchar区别
+https://www.cnblogs.com/Jashinck/p/8384388.html

@@ -1,0 +1,37 @@
+1.sessionStorage session cookie 
+https://www.cnblogs.com/zr123/p/8086525.html
+
+2.Java多线程中static变量的使用
+https://www.cnblogs.com/hadoop-dev/p/6860103.html
+https://blog.csdn.net/yy304935305/article/details/52456771
+
+3.sessionid在什么时候创建的
+https://www.cnblogs.com/wszz/p/7778564.html
+https://www.cnblogs.com/Fly-sky/p/4150624.html
+https://blog.csdn.net/hearain528/article/details/47218851?readlog
+
+3.throw throws try catch finally如何使用
+https://blog.csdn.net/archer_zoro/article/details/52691173
+
+4.unsafe类
+https://blog.csdn.net/luzheqi/article/details/79097682
+https://www.cnblogs.com/sunzhenchao/p/6541783.html
+
+5.java cas详解
+https://blog.csdn.net/ls5718/article/details/52563959
+
+6.HandlerInterceptor拦截器
+https://blog.csdn.net/sunp823/article/details/51694662
+
+7.spring容器负责管理对象的生命周期,应用上下文applicationcontext向spring容器里放入我们需要容器代为管理的对象;
+https://www.cnblogs.com/chenbenbuyi/p/8166304.html
+tomcat是一个servlet容器,也是一个web容器,同时也是个web服务器;
+HttpServletRequest是ServletRequet的一个子接口;
+请求顺序:Tomcat容器→Filter→Servlet→Inteceptor→Controller,所以Filter请求的request(service())是ServletRequest,
+而Inteceptor、Control里的request是HttpServletRequest；
+一个servlet必须继承抽象类HttpServlet，同时HttpServlet又继承了GenericalServlet抽象类，GenericalServlet实现了Servlet接口
+
+8.servlet
+https://www.cnblogs.com/whgk/p/6399262.html
+https://blog.csdn.net/xiaojiahao_kevin/article/details/51781946
+https://blog.csdn.net/a3060858469/article/details/78120527

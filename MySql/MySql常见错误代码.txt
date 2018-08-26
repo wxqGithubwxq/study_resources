@@ -1,0 +1,7 @@
+1.MySQL创建Function时报错误码1418的解决方案
+https://blog.csdn.net/yown/article/details/52511926
+
+2.MySql建索引单列索引字节长度不能超过767，在Innob的utf8mb4编码下字符为191和utf8字符长度为255
+
+3.MySql创建字段长度时报1118错误的原理解析及解决方案 （最大行长度字节长度为65535，int占4个字节，varchar会有1到2个字节存储位置信息）
+https://www.cnblogs.com/lbf1994/articles/5677453.html

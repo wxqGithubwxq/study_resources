@@ -1,0 +1,6 @@
+1.sso单点登入原理解析
+https://www.cnblogs.com/ywlaker/p/6113927.html
+
+2.Token认证原理
+https://www.cnblogs.com/MR-YY/p/5972380.html
+https://blog.csdn.net/qq_33329988/article/details/78274407?locationNum=10&fps=1

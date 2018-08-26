@@ -1,0 +1,14 @@
+1.基于Spring管理的声明式事务具有以下特点：
+无论书基于注解还是用AOP去实现声明式事务默认都只对RuntimeException运行时异常进行回滚，
+可以通过使用rollback声明需要进行回滚的异常，并且事务必须往上抛出异常，也就是捕获异常会导致事务失效，
+需要在对异常捕获的catch语句块里通过throw new RuntimeException抛出异常才能使事务生效；对于存储过程的事务，
+可以通过set autocommit=0来关闭事务的自动提交，直接交给java代码进行提交，再通过
+DECLARE CONTINUE HANDLER FOR SQLEXCEPTION SET  stop_flag = 1; 来判断事务是否需要回滚，回滚操作既可以在存储过程
+里自己完成，这也意味着和他在同一个事务里的CUDI会提交，后面的CUDI会重新建立一个新的事物，也可以交给java通过
+stop_flag进行事务回滚的判定，而对于自定义函数里所有的操作都具有原子性，而对于create、drop、alter等DDL操作具备隐式
+提交的语句是不允许出现在自定义函数中的。DDL操作市隐式提交的，所以放在存储过程中会产生一定的影响，应根据具体情况
+作出调整，避免对整个应用程序产生影响。另外，在同一个service的事务方法里面调用另一个事务方法也会造成事务不生效
+
+关于嵌套事务
+https://www.cnblogs.com/softidea/p/5962568.html
+https://blog.csdn.net/yangchangyong0/article/details/51960143

@@ -1,0 +1,9 @@
+ @SuppressWarnings("unchecked")
+https://www.cnblogs.com/zjfjava/p/7931867.html
+
+2.@ServerEndpoint  @onopen
+https://blog.csdn.net/huangbaokang/article/details/77579151
+客户端通过websocket与服务器建立连接
+
+3.@Autowired @Inject @Resource
+https://www.cnblogs.com/pjfmeng/p/7551340.html

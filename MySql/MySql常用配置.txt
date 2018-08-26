@@ -1,0 +1,2 @@
+1.linux和windows下表名和字段名是否区分大小写
+https://blog.csdn.net/who_is_xiaoming/article/details/53200573
