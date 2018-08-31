@@ -3,3 +3,9 @@ https://blog.csdn.net/qq_27093465/article/details/50731087
 
 2.type="application/javascript"和type="text/javascript"区别
 https://blog.csdn.net/killzero/article/details/17786541
+
+3.settimeout setinterval 区别
+https://www.cnblogs.com/xiaohuochai/p/5773183.html
+
+4.substring(var start,var finish)
+默认第一个字符串是1,左开右闭,即不包含开始,包含结束字符串

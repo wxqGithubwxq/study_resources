@@ -1,0 +1,11 @@
+https://www.cnblogs.com/landeanfen/p/7457283.html
+https://blog.csdn.net/nihaoma71121/article/details/50971672
+
+1.获取选中的文本的值
+$('#grantrole').selectpicker('val')
+https://blog.csdn.net/m0_37355951/article/details/75339043
+
+2.bootstrap select动态赋值与赋默认值
+$('#waterfall-is-rules').selectpicker('refresh');
+https://www.cnblogs.com/daijun/p/7872663.html
+https://www.cnblogs.com/lhd404/p/8031571.html

@@ -1,0 +1,9 @@
+1.@PropertySource({"classpath:config/my.properties","classpath:config/config.properties"})
+需要用@PropertySource的有：
+例如非application.properties，classpath:config/my.properties指的是src/main/resources目录下config目录下的my.properties文件，
+例如有多配置文件引用，若取两个配置文件中有相同属性名的值，则取值为最后一个配置文件中的值
+在application.properties中的文件，直接使用@Value读取即可，applicarion的读取优先级最高
+
+2.@Value("${my.name}")
+private String myName;
+@Value读取application.properties里的配置内容 不能和静态变量一起使用
