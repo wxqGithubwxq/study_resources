@@ -36,5 +36,10 @@ https://www.cnblogs.com/whgk/p/6399262.html
 https://blog.csdn.net/xiaojiahao_kevin/article/details/51781946
 https://blog.csdn.net/a3060858469/article/details/78120527
 
+
 9.过滤器 拦截器 servlet controller执行先后顺序
 https://www.cnblogs.com/dreamroute/p/4198087.html
+
+10.springboot常见读取配置文件属性的方法
+https://blog.csdn.net/thc1987/article/details/78789426
+
