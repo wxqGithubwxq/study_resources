@@ -4,3 +4,39 @@ https://www.cnblogs.com/lxboy2009/p/7234535.html
 2.mysql创建函数时一定要有返回值,并且返回值不能是结果集,定义的变量也不能赋结果集
 mysql创建存储过程可以通过select语句返回结果集,游标在定义可以不给变量赋初始值,在执行,也就是打开游标前,
 变量一定要有初始值,并且游标可以存储结果集
+
+3.insert语句
+在标准的SQL语句中，插入一条语句是用：
+insert into table (field1,field2) values (value1,value2)
+而MySQL中提供了一条扩展语句：
+insert into table set field1 = value1,field2 = value2
+使用set语法的语句可以更短，更清晰，以高效率更快写入，并且可以有效避免在编写values子句时混合列顺序导致的拼写错误。
+但是，在可移植性上面，只在MySQL上支持的set语法明显失去了优势，并且在多条插入上，它也同样鸡肋。
+insert语句5种写法https://blog.csdn.net/number1killer/article/details/77841565
+insert语句value和values区别https://blog.csdn.net/qq_26683009/article/details/52526834
+
+4.update语句
+UPDATE table_name SET field1=new-value1, field2=new-value2
+[WHERE Clause]
+注意：
+1）如果没有WHERE子句，则更新所有的行。
+2）如果指定了ORDER BY子句，则按照被指定的顺序对行进行更新。
+3）LIMIT子句用于给定一个限值，限制可以被更新的行的数目。
+4）多表更新时ORDER BY和LIMIT不能被使用；
+1）单表修改是指修改指定单个表中的已经存在数据的一个或多个列的数值；set短语后面跟要修改的列和值；
+2）where子句表示限定要修改表中的哪些数据，如果没有where子句则表示所有行都要修改；
+3）order by子句表示update数据按照指定的顺序进行；
+4）limit子句表示限定修改数据的行数；
+5）多表修改是指修改table_references指定的多个表中满足条件的行数据，多表修改不允许使用order by和limit子句；
+https://www.cnblogs.com/tongxiaoda/p/7908977.html
+
+5.delete语句
+DELETE FROM table_name [WHERE Clause]
+delete <alias> from <table> <alias> where <alias>.<field>...
+用别名的：DELETE s from  sys_menus s WHERE s.MENU_ID in (86,87,88);
+https://www.cnblogs.com/wuyun-blog/p/6178303.html
+
+6.select语句
+select*from 表名 [where 条件];
+select field1,field2,...fieldn... from 表名 [where 条件];
+https://www.cnblogs.com/drake-guo/p/6104654.html

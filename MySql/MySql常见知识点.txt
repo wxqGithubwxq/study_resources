@@ -92,3 +92,51 @@ where a=1 and b=2 and c>3 and d=4,½¨Á¢µÄË÷ÒýÎª(a,bc,d).Õâ¸öÊ±ºòÆ¥Åäµ½cºó£¬dÔò²»Ä
 2¡¢Êý¾ÝÁ¿ÉÙµÄ×Ö¶Î²»ÐèÒª¼ÓË÷Òý£»ÒòÎª½¨Ë÷ÒýÓÐÒ»¶¨¿ªÏú£¬Èç¹ûÊý¾ÝÁ¿Ð¡ÔòÃ»±ØÒª½¨Ë÷Òý£¨ËÙ¶È·´¶øÂý£© 
 3¡¢Èç¹ûwhereÌõ¼þÖÐÊÇOR¹ØÏµ£¬¼ÓË÷Òý²»Æð×÷ÓÃ 
 4¡¢ÁªºÏË÷Òý±È¶ÔÃ¿¸öÁÐ·Ö±ð½¨Ë÷Òý¸üÓÐÓÅÊÆ£¬ÒòÎªË÷Òý½¨Á¢µÃÔ½¶à¾ÍÔ½Õ¼´ÅÅÌ¿Õ¼ä£¬ÔÚ¸üÐÂÊý¾ÝµÄÊ±ºòËÙ¶È»á¸üÂý¡£ÁíÍâ½¨Á¢¶àÁÐË÷ÒýÊ±£¬Ë³ÐòÒ²ÊÇÐèÒª×¢ÒâµÄ£¬Ó¦¸Ã½«ÑÏ¸ñµÄË÷Òý·ÅÔÚÇ°Ãæ£¬ÕâÑùÉ¸Ñ¡µÄÁ¦¶È»á¸ü´ó£¬Ð§ÂÊ¸ü¸ß¡£
+
+8.DQL¡¢DML¡¢DDL¡¢DCL
+SQLÓïÑÔµÄ·ÖÀà
+SQLÓïÑÔ¹²·ÖÎªËÄ´óÀà£ºÊý¾Ý²éÑ¯ÓïÑÔDQL£¬Êý¾Ý²Ù×ÝÓïÑÔDML£¬Êý¾Ý¶¨ÒåÓïÑÔDDL£¬Êý¾Ý¿ØÖÆÓïÑÔDCL¡£
+1. Êý¾Ý²éÑ¯ÓïÑÔDQL
+Êý¾Ý²éÑ¯ÓïÑÔDQL»ù±¾½á¹¹ÊÇÓÉSELECT×Ó¾ä£¬FROM×Ó¾ä£¬WHERE
+×Ó¾ä×é³ÉµÄ²éÑ¯¿é£º
+SELECT <×Ö¶ÎÃû±í>
+FROM <±í»òÊÓÍ¼Ãû>
+WHERE <²éÑ¯Ìõ¼þ>
+2 .Êý¾Ý²Ù×ÝÓïÑÔDML
+Êý¾Ý²Ù×ÝÓïÑÔDMLÖ÷ÒªÓÐÈýÖÖÐÎÊ½£º
+1) ²åÈë£ºINSERT
+2) ¸üÐÂ£ºUPDATE
+3) É¾³ý£ºDELETE
+3. Êý¾Ý¶¨ÒåÓïÑÔDDL
+Êý¾Ý¶¨ÒåÓïÑÔDDLÓÃÀ´´´½¨Êý¾Ý¿âÖÐµÄ¸÷ÖÖ¶ÔÏó-----±í¡¢ÊÓÍ¼¡¢
+Ë÷Òý¡¢Í¬Òå´Ê¡¢¾Û´ØµÈÈç£º
+CREATE TABLE/VIEW/INDEX/SYN/CLUSTER
+| | | | |
+±í ÊÓÍ¼ Ë÷Òý Í¬Òå´Ê ´Ø
+DDL²Ù×÷ÊÇÒþÐÔÌá½»µÄ£¡²»ÄÜrollback 
+4. Êý¾Ý¿ØÖÆÓïÑÔDCL
+Êý¾Ý¿ØÖÆÓïÑÔDCLÓÃÀ´ÊÚÓè»ò»ØÊÕ·ÃÎÊÊý¾Ý¿âµÄÄ³ÖÖÌØÈ¨£¬²¢¿ØÖÆ
+Êý¾Ý¿â²Ù×ÝÊÂÎñ·¢ÉúµÄÊ±¼ä¼°Ð§¹û£¬¶ÔÊý¾Ý¿âÊµÐÐ¼àÊÓµÈ¡£Èç£º
+1) GRANT£ºÊÚÈ¨¡£
+2) ROLLBACK [WORK] TO [SAVEPOINT]£º»ØÍËµ½Ä³Ò»µã¡£
+»Ø¹ö---ROLLBACK
+»Ø¹öÃüÁîÊ¹Êý¾Ý¿â×´Ì¬»Øµ½ÉÏ´Î×îºóÌá½»µÄ×´Ì¬¡£Æä¸ñÊ½Îª£º
+SQL>ROLLBACK;
+3) COMMIT [WORK]£ºÌá½»¡£
+ÔÚÊý¾Ý¿âµÄ²åÈë¡¢É¾³ýºÍÐÞ¸Ä²Ù×÷Ê±£¬Ö»ÓÐµ±ÊÂÎñÔÚÌá½»µ½Êý¾Ý
+¿âÊ±²ÅËãÍê³É¡£ÔÚÊÂÎñÌá½»Ç°£¬Ö»ÓÐ²Ù×÷Êý¾Ý¿âµÄÕâ¸öÈË²ÅÄÜÓÐÈ¨¿´
+µ½Ëù×öµÄÊÂÇé£¬±ðÈËÖ»ÓÐÔÚ×îºóÌá½»Íê³Éºó²Å¿ÉÒÔ¿´µ½¡£
+Ìá½»Êý¾ÝÓÐÈýÖÖÀàÐÍ£ºÏÔÊ½Ìá½»¡¢ÒþÊ½Ìá½»¼°×Ô¶¯Ìá½»¡£ÏÂÃæ·Ö
+±ðËµÃ÷ÕâÈýÖÖÀàÐÍ¡£
+(1) ÏÔÊ½Ìá½»
+ÓÃCOMMITÃüÁîÖ±½ÓÍê³ÉµÄÌá½»ÎªÏÔÊ½Ìá½»¡£Æä¸ñÊ½Îª£º
+SQL>COMMIT£»
+(2) ÒþÊ½Ìá½»
+ÓÃSQLÃüÁî¼ä½ÓÍê³ÉµÄÌá½»ÎªÒþÊ½Ìá½»¡£ÕâÐ©ÃüÁîÊÇ£º
+ALTER£¬AUDIT£¬COMMENT£¬CONNECT£¬CREATE£¬DISCONNECT£¬DROP£¬
+EXIT£¬GRANT£¬NOAUDIT£¬QUIT£¬REVOKE£¬RENAME¡£
+(3) ×Ô¶¯Ìá½»
+Èô°ÑAUTOCOMMITÉèÖÃÎªON£¬ÔòÔÚ²åÈë¡¢ÐÞ¸Ä¡¢É¾³ýÓï¾äÖ´ÐÐºó£¬
+ÏµÍ³½«×Ô¶¯½øÐÐÌá½»£¬Õâ¾ÍÊÇ×Ô¶¯Ìá½»¡£Æä¸ñÊ½Îª£º
+SQL>SET AUTOCOMMIT ON£»
+(4)×Ô¶¯Ìá½»Èô°ÑAUTOCOMMITÉèÖÃÎªON£¬ÔòÔÚ²åÈë¡¢ÐÞ¸Ä¡¢É¾³ýÓï¾äÖ´ÐÐºó£¬ÏµÍ³½«×Ô¶¯½øÐÐÌá½»£¬Õâ¾ÍÊÇ×Ô¶¯Ìá½»¡£Æä¸ñÊ½Îª£ºSQL>SET AUTOCOMMIT ON£»
