@@ -12,3 +12,17 @@ https://blog.csdn.net/k_122/article/details/76101744
 4.通过localStorage实现永久性的记住密码功能
 
 5.EL表达式和OGNL表达式
+
+6.html不能含有任何的java代码,包括EL和OGNL表达式,引用文件也不能加<%=request.getContextPath()%>,<include>等关键字
+
+7. $("#sms-role").chosen({         search_contains: true     });
+jquery.chosen.js 在模糊搜索的时候，只能够匹配以相同 字符开头的 选项，现在我想要匹配所有项目,加上上面这句代码就ok了
+
+8.index()
+index() 方法返回指定元素相对于其他指定元素的 index 位置。
+这些元素可通过 jQuery 选择器或 DOM 元素来指定。
+注释：如果未找到元素，index() 将返回 -1。
+
+9.sliblings()和sliblings(selector)的区别
+ 获得匹配集合中每个元素的同胞，通过选择器进行筛选是可选的,sliblings()是除开自己以外同一级别的同胞元素.
+sliblings(selector)是匹配selector的所有同胞元素

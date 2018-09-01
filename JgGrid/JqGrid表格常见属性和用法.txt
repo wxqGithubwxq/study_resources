@@ -1,0 +1,9 @@
+1.rownum设置查询的数据条数
+jqGrid 属性rownum默认值：20，全部显示设置为-1
+https://blog.csdn.net/zhaotengfei36520/article/details/49121987
+
+2.postData设置传递的参数
+https://blog.csdn.net/qq_27194467/article/details/52381785?locationNum=15
+
+3.设置表格不显示checkbox这一列
+ 设置 multiselect: false,//定义复选框
