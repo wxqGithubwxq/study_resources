@@ -1,0 +1,3 @@
+1.Error:svn: E155037: Previous operation has not finished; run 'cleanup' if it was interrupted
+ 可以通过svn status命令在svn仓库文件下查看哪些文件项目被锁定了命令查看哪些文件项目被锁定了,
+ 然后通过svn 的cleanup释放被上锁的文件(默认释放不了,就勾选brock lock强行释放)

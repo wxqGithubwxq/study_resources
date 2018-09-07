@@ -1,0 +1,22 @@
+﻿http://www.runoob.com/java/java-regular-expressions.html
+https://www.cnblogs.com/qdhxhz/p/6375185.html
+https://www.cnblogs.com/fozero/p/7868687.html
+1.this is text
+匹配字符串 "this is text"
+this\s+is\s+text
+注意字符串中的 \s+。
+匹配单词 "this" 后面的 \s+ 可以匹配多个空格，之后匹配 is 字符串，再之后 \s+ 匹配多个空格然后再跟上 text 字符串。
+可以匹配这个实例：this is text
+^\d+(\.\d+)?
+^ 定义了以什么开始
+\d+ 匹配一个或多个数字
+? 设置括号内的选项是可选的
+\. 匹配 "."
+可以匹配的实例："5", "1.5" 和 "2.21"。
+
+2.replace replaceAll replaceFirst区别
+三张替换均不改变原字符串的值,replace是替换所有匹配的字符串(没有用到正则表达式),replaceAll、replaceFirst用到了正则表达式,所以在写替换
+的时候应该注意特殊字符的转义
+https://www.cnblogs.com/jun9207/p/5191857.html
+https://blog.csdn.net/ydxzmhy/article/details/51143269
+https://www.jb51.net/article/91952.htm

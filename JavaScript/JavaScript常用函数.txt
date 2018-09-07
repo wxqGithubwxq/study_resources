@@ -9,3 +9,16 @@ https://www.cnblogs.com/xiaohuochai/p/5773183.html
 
 4.substring(var start,var finish)
 默认第一个字符串是1,左开右闭,即不包含开始,包含结束字符串
+
+5.替换字符串函数(需要用到RegExp对象)
+http://www.w3school.com.cn/jsref/jsref_obj_regexp.asp   (RegExp学习)
+https://www.liaoxuefeng.com/wiki/001434446689867b27157e896e74d51a89c25cc8b43bdb3000/001434499503920bb7b42ff6627420da2ceae4babf6c4f2000
+var r1 = /test/g;
+// 等价于:
+var r2 = new RegExp('test', 'g');
+replace()
+https://www.jb51.net/article/28009.htm
+https://www.cnblogs.com/dragondean/p/javascript-replaceall.html
+
+6.select常见赋值方法(含给指定text选中的方法)
+https://blog.csdn.net/qq_36827957/article/details/79263795
