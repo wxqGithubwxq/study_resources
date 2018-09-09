@@ -43,3 +43,13 @@ https://www.cnblogs.com/dreamroute/p/4198087.html
 10.springboot常见读取配置文件属性的方法
 https://blog.csdn.net/thc1987/article/details/78789426
 
+11.java多维数组
+https://www.jb51.net/article/113767.htm
+java定义数组的三种类型
+int[] arr1=new int[10];  
+int[] arr2={1,2,3,6};  
+int[] arr3=new int[]{1,2,3,4,5,6,7,22};
+https://blog.csdn.net/zbdxcyg/article/details/78546961
+java定义二维数组
+https://blog.csdn.net/ryj359/article/details/75453142/
+https://www.cnblogs.com/xjpu/p/6106559.html
