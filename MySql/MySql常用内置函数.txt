@@ -22,3 +22,35 @@ https://www.cnblogs.com/conanwang/p/5848006.html
 7.ROW_COUNT() FOUND_ROWS()
 https://segmentfault.com/q/1010000007962305
 https://blog.csdn.net/zhou520yue520/article/details/81155248
+
+8.if 和ifnull 函数的区别
+https://blog.csdn.net/ahjxhy2010/article/details/71194413
+一、IF函数
+
+        表达式:IF(expr1,expr2,expr3)
+
+        满足条件expr1即条件expr1返回true
+
+        则expr2
+
+        否则就是expr3
+
+eg:
+
+      1. SELECT IF(1=1,2,3); 则输出2
+
+      2.SELECT IF(1=2,2,3);则输出3
+
+二、IFNULL函数
+
+        表达式:IFNULL(expr1,expr2)
+
+        如果expr1值为NULL,则输出expr2
+
+        如果expr1值不为空则输出expr1本身
+
+eg:
+
+      1.SELECT IFNULL(null,"2");则输出2
+
+      2.SELECT IFNULL(3,"2");则输出3

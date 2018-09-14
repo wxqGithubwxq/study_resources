@@ -12,3 +12,7 @@ stop_flag进行事务回滚的判定，而对于自定义函数里所有的操作都具有原子性，而对于cre
 关于嵌套事务
 https://www.cnblogs.com/softidea/p/5962568.html
 https://blog.csdn.net/yangchangyong0/article/details/51960143
+
+2.事务的传播行为
+https://blog.csdn.net/dream_broken/article/details/72845928
+https://blog.csdn.net/wwh578867817/article/details/51736723

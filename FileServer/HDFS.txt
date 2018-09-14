@@ -1,0 +1,6 @@
+1.HDFS全称叫做Hadoop分布式文件系统
+https://www.cnblogs.com/caiyisen/p/7395843.html
+https://www.cnblogs.com/codeOfLife/p/5375120.html
+
+2.Hadoop相关知识
+https://blog.csdn.net/huyuyang6688/article/details/73457827

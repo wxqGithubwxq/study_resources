@@ -39,6 +39,19 @@ https://blog.csdn.net/a3060858469/article/details/78120527
 
 9.过滤器 拦截器 servlet controller执行先后顺序
 https://www.cnblogs.com/dreamroute/p/4198087.html
+过滤器和拦截器非常相似，但是它们有很大的区别
+最简单明了的区别就是过滤器可以修改request，而拦截器不能
+过滤器需要在servlet容器中实现，拦截器可以适用于javaEE，javaSE等各种环境
+拦截器可以调用IOC容器中的各种依赖，而过滤器不能
+过滤器只能在请求的前后使用，而拦截器可以详细到每个方法
+区别很多，大家可以去查下https://segmentfault.com/a/1190000012072060
+过滤器不能使用依赖,其根本原因在于依赖还没有被加载到容器里面
+https://www.cnblogs.com/springlight/p/6297001.html
+
+总的来说
+过滤器就是筛选出你要的东西，比如requeset中你要的那部分
+拦截器在做安全方面用的比较多，比如终止一些流程
+网上有一张图片很不错，这里拷过来给大家看一下
 
 10.springboot常见读取配置文件属性的方法
 https://blog.csdn.net/thc1987/article/details/78789426

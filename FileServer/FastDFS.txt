@@ -1,0 +1,3 @@
+1.FastDFS作为分布式文件存储技术一般用于大型项目中
+https://blog.csdn.net/unscdf117/article/details/79052598
+http://blog.chinaunix.net/uid-20196318-id-4058561.html

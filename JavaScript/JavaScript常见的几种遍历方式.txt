@@ -1,0 +1,5 @@
+1.https://www.cnblogs.com/ihboy/p/6878427.html
+说到遍历，首先想到的是数组的遍历，方法不要太多，比如 for， forEach，map，filter，every，some等
+当然， 除了遍历数组之外，还有遍历对象，常用方法 in,in 不仅可以用来 遍历对象，还可以用来遍历数组， 不过 i 对应与数组的 key值
+介绍完遍历，下面说一下工作中遇到的情况，后台传给我一个对象数组，我需要排序再显示，看到有介绍用 sort 排序的方法，如下
+https://www.jb51.net/article/110546.htm
