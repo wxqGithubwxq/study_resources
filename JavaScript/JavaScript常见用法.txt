@@ -1,0 +1,6 @@
+1.按钮置灰不可点击
+在html上写上onclick事件,在js里写似乎不可行,
+$("#project-tijiao").attr('disabled', true);
+$("#project-tijiao").removeAttr("onclick");
+https://blog.csdn.net/fationyyk/article/details/51333336
+https://www.cnblogs.com/nana-share/p/4886340.html

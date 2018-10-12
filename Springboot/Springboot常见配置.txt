@@ -1,2 +1,5 @@
 1.idea环境下配置springboot的热部署
 https://blog.csdn.net/Connie1451/article/details/79875835
+
+2.打包jar包
+https://blog.csdn.net/smilecall/article/details/56288972/

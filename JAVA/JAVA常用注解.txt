@@ -7,3 +7,17 @@ https://blog.csdn.net/huangbaokang/article/details/77579151
 
 3.@Autowired @Inject @Resource
 https://www.cnblogs.com/pjfmeng/p/7551340.html
+
+4.@EnableAspectJAutoProxy 启用自动代理proxyTargetClass为true 的话使用cglib,为false的话使用java的Proxy,默认为false
+exposeProxy控制代理的暴露方式,解决内部调用不能使用代理的场景，默认为false.
+@EnableAspectJAutoProxy：
+表示开启AOP代理自动配置，如果配@EnableAspectJAutoProxy表示使用cglib进行代理对象的生成；
+设置@EnableAspectJAutoProxy(exposeProxy=true)表示通过aop框架暴露该代理对象，aopContext能够访问.
+https://blog.csdn.net/pml18710973036/article/details/61654277
+https://www.cnblogs.com/foreveravalon/p/8653832.html
+
+5.@EnableCaching @Cacheable @CacheEvict @CachePut
+https://www.cnblogs.com/fashflying/p/6908028.html
+
+6.@SuppressWarnings
+https://www.cnblogs.com/EasonJim/p/7759804.html

@@ -17,3 +17,30 @@ https://blog.csdn.net/downloads_zip/article/details/79171368
 
 5.cookie跨域
 https://www.cnblogs.com/1020182600HENG/p/7121148.html
+
+6.常见的登入认证技术
+OAuth 认证
+Cookie-Session 认证
+Cookie-Session 改造版
+基于JWT的Token认证
+https://www.cnblogs.com/fengzheng/p/8416393.html
+
+7.websocket双向长连接通讯(https://www.cnblogs.com/bianzy/p/5822426.html测试通过)
+https://bbs.csdn.net/topics/350263108
+https://www.cnblogs.com/roy-blog/p/7211761.html
+https://www.cnblogs.com/jinjixia/p/5127214.html
+https://blog.csdn.net/sihai12345/article/details/80924937
+https://www.jianshu.com/p/f71301ef36e8
+https://blog.csdn.net/lissettecarlr/article/details/51338362
+https://blog.csdn.net/u014792342/article/details/79076770
+https://www.cnblogs.com/rocomp/p/4790340.html
+https://blog.csdn.net/linuxarmsummary/article/details/69357613
+https://my.oschina.net/u/3580577/blog/2088114?from=20180923
+https://blog.csdn.net/binlixia/article/details/52767635
+
+8.websocket心跳机制
+https://blog.csdn.net/jkxqj/article/details/77848466
+https://www.cnblogs.com/tugenhua0707/p/8648044.html
+https://www.cnblogs.com/1wen/p/5808276.html
+https://blog.csdn.net/sunshine_silence/article/details/79642282
+https://blog.csdn.net/u014792342/article/details/79076770(个人觉得完美解决断电断网问题)

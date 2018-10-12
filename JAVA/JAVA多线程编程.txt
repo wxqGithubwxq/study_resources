@@ -1,0 +1,44 @@
+1.https://www.cnblogs.com/iTlijun/p/5860379.html
+实现多线程的两种方式:一是继承Thread类;二是实现Runnable接口,从源码中可以看出Thread类是实现了Runnable接口的,由于Java里面只运行单继承,却可以
+多实现,所以具体采用哪种方式视具体情况而定,同时要开启新线程是需要调用start方法,而不是调用run 方法,并且线程的创建并不会阻塞主线程的进行。
+继承Thread类：
+public class Test {
+    public static void main(String[] args)  {
+        System.out.println("主线程ID:"+Thread.currentThread().getId());
+        MyThread thread1 = new MyThread("thread1");
+        thread1.start();
+        MyThread thread2 = new MyThread("thread2");
+        thread2.run();
+    }
+}
+ 
+class MyThread extends Thread{
+    private String name;
+ 
+    public MyThread(String name){
+        this.name = name;
+    }
+ 
+    @Override
+    public void run() {
+        System.out.println("name:"+name+" 子线程ID:"+Thread.currentThread().getId());
+    }
+}
+实现Runnable接口：
+public class Test {
+    public static void main(String[] args)  {
+        System.out.println("主线程ID："+Thread.currentThread().getId());
+        MyRunnable runnable = new MyRunnable();
+        Thread thread = new Thread(runnable);
+        thread.start();
+    }
+} 
+class MyRunnable implements Runnable{
+    public MyRunnable() {
+    }
+ 
+    @Override
+    public void run() {
+        System.out.println("子线程ID："+Thread.currentThread().getId());
+    }
+}

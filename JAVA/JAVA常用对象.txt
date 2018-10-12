@@ -1,4 +1,3 @@
-1.sessionStorage session cookie 
 https://www.cnblogs.com/zr123/p/8086525.html
 
 2.Java多线程中static变量的使用
@@ -66,3 +65,12 @@ https://blog.csdn.net/zbdxcyg/article/details/78546961
 java定义二维数组
 https://blog.csdn.net/ryj359/article/details/75453142/
 https://www.cnblogs.com/xjpu/p/6106559.html
+
+12.json类库(Json-lib、Gson、Jackson、Fastjson)
+https://blog.csdn.net/moshenglv/article/details/52021263
+https://blog.csdn.net/qq_37550528/article/details/79497938
+总结：
+Java Bean序列化为Json，性能：Jackson > FastJson > Gson > Json-lib。这4中类库的序列化结构都正确。
+Json字符串反序列化为Java Bean时，性能：Jackson > Gson > FastJson >Json-lib。并且Jackson、Gson、FastJson可以很好的支持复杂的嵌套结构定义的类，而Json-lib对于复制的反序列化会出错。
+Jackson、FastJson、Gson类库各有优点，各有自己的专长，都具有很高的可用性。
+https://blog.csdn.net/pyfysf/article/details/79673278
