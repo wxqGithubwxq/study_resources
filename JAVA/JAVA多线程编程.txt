@@ -1,6 +1,6 @@
 1.https://www.cnblogs.com/iTlijun/p/5860379.html
-实现多线程的两种方式:一是继承Thread类;二是实现Runnable接口,从源码中可以看出Thread类是实现了Runnable接口的,由于Java里面只运行单继承,却可以
-多实现,所以具体采用哪种方式视具体情况而定,同时要开启新线程是需要调用start方法,而不是调用run 方法,并且线程的创建并不会阻塞主线程的进行。
+实现多线程的两种方式:一是继承Thread类;二是实现Runnable接口,从源码中可以看出Thread类是实现了Runnable接口的,由于Java里面只运行单继承类,却可以
+多实现接口,所以具体采用哪种方式视具体情况而定,同时要开启新线程是需要调用start方法,而不是调用run 方法,并且线程的创建并不会阻塞主线程的进行。
 继承Thread类：
 public class Test {
     public static void main(String[] args)  {
@@ -42,3 +42,35 @@ class MyRunnable implements Runnable{
         System.out.println("子线程ID："+Thread.currentThread().getId());
     }
 }
+
+
+2.https://www.cnblogs.com/upcwanghaibo/p/6535505.html
+实现多线程的同步的七种方法
+同步是多线程中的重要概念。同步的使用可以保证在多线程运行的环境中，程序不会产生设计之外的错误结果。同步的实现方式有两种，同步方法和同步块，这两种方式都要用到synchronized关键字。
+同步方法:给一个方法增加synchronized修饰符之后就可以使它成为同步方法，这个方法可以是静态方法和非静态方法，但是不能是抽象类的抽象方法，也不能是接口中的接口方法.
+下面代码是一个同步方法的示例：
+public synchronized void aMethod() { 
+    // do something 
+} 
+
+public static synchronized void anotherMethod() { 
+    // do something 
+} 
+线程在执行同步方法时是具有排它性的。当任意一个线程进入到一个对象的任意一个同步方法时，这个对象的所有同步方法都被锁定了，在此期间，
+其他任何线程都不能访问这个对象的任意一个同步方法，直到这个线程执行完它所调用的同步方法并从中退出，从而导致它释放了该对象的同步锁之后。
+在一个对象被某个线程锁定之后，其他线程是可以访问这个对象的所有非同步方法的。
+
+同步块：同步块是通过锁定一个指定的对象，来对同步块中包含的代码进行同步；而同步方法是对这个方法块里的代码进行同步，而这种情况下锁定的对象就是同步方法所属的主体对象自身。
+如果这个方法是静态同步方法呢？那么线程锁定的就不是这个类的对象了，也不是这个类自身，而是这个类对应的java.lang.Class类型的对象。同步方法和同步块之间的相互制约只限于同一个
+对象之间，所以静态同步方法只受它所属类的其它静态同步方法的制约，而跟这个类的实例（对象）没有关系。
+如果一个对象既有同步方法，又有同步块，那么当其中任意一个同步方法或者同步块被某个线程执行时，这个对象就被锁定了，其他线程无法在此时访问这个对象的同步方法，也不能执行同步块。
+
+3.https://blog.csdn.net/x_men_01/article/details/53170569
+Java Servlet单例多线程机制详解
+
+4.https://blog.csdn.net/TzBugs/article/details/80939811
+Java并发系列六：深入了解final关键字
+https://blog.csdn.net/FlyLikeButterfly/article/details/80379933?utm_source=blogxgwz0
+坑——java多线程里用final引用
+https://www.cnblogs.com/wangyayun/p/6593446.html
+浅谈对java中锁的理解
