@@ -1,0 +1,53 @@
+java并发编程实践
+
+第三章:共享对象
+1.synchronized(this)、synchronized(class)与synchronized(Object)的区别
+https://www.cnblogs.com/blogxiao/p/7694130.html
+https://blog.csdn.net/luckey_zh/article/details/53815694
+(1)、synchronized同步方法
+
+①对其它的synchronized同步方法或synchronized(this)同步代码块调用是堵塞状态；
+
+②同一时间只有一个线程执行synchronized同步方法中的代码。
+
+(2)、synchronized(this)同步代码块
+
+①对其它的synchronized同步方法或synchronized(this)同步代码块调用是堵塞状态；
+
+②同一时间只有一个线程执行synchronized同步方法中的代码。
+
+(3)多个线程持有对象监视器作为同一个对象的前提下，同一时间只有一个线程可以执行synchronized(任意自定义对象)同步代码快。
+
+(4)使用synchronized(任意自定义对象)进行同步操作，对象监视器必须是同一个对象。不过不是同一个，运行就是异步执行了。
+
+(5)synchronized应用在static方法上，那是对当前对应的*.Class进行持锁。
+
+(6)同步synchronized(*.class)代码块的作用其实和synchronized static方法作用一样。Class锁对类的所有对象实例起作用。
+
+
+2.volatile变量
+
+
+
+3.ThreadLocal类
+http://www.cnblogs.com/dolphin0520/p/3920407.html
+
+
+
+4.final
+https://www.cnblogs.com/dotgua/p/6357951.html
+final关键字是我们经常使用的关键字之一，它的用法有很多，但是并不是每一种用法都值得我们去广泛使用。它的主要用法有以下四种：
+用来修饰数据，包括成员变量和局部变量，该变量只能被赋值一次且它的值无法被改变。对于成员变量来讲，我们必须在声明时或者构造方法中对它赋值；
+用来修饰方法参数，表示在变量的生存期中它的值不能被改变；
+修饰方法，表示该方法无法被重写；
+修饰类，表示该类无法被继承。
+上面的四种方法中，第三种和第四种方法需要谨慎使用，因为在大多数情况下，如果是仅仅为了一点设计上的考虑，我们并不需要使用final来修饰方法和类。
+
+5.守护线程和非守护线程了解
+https://www.cnblogs.com/lixuan1998/p/6937986.html
+所谓守护线程是指在程序运行的时候在后台提供一种通用服务的线程，比如垃圾回收线程就是一个很称职的守护者，并且这种线程并不属于程序中不可或缺的部分。因 此，当所有的非守护线程结束时，程序也就终止了，同时会杀死进程中的所有守护线程。反过来说，只要任何非守护线程还在运行，程序就不会终止。
+守护线程和用户线程的没啥本质的区别：唯一的不同之处就在于虚拟机的离开：如果用户线程已经全部退出运行了，只剩下守护线程存在了，虚拟机也就退出了。 因为没有了被守护者，守护线程也就没有工作可做了，也就没有继续运行程序的必要了。
+将线程转换为守护线程可以通过调用Thread对象的setDaemon(true)方法来实现。在使用守护线程时需要注意一下几点：
+(1) thread.setDaemon(true)必须在thread.start()之前设置，否则会跑出一个IllegalThreadStateException异常。你不能把正在运行的常规线程设置为守护线程。
+(2) 在Daemon线程中产生的新线程也是Daemon的。
+(3) 守护线程应该永远不去访问固有资源，如文件、数据库，因为它会在任何时候甚至在一个操作的中间发生中断

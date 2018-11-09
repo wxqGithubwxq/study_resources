@@ -1,0 +1,68 @@
+1.FastJson
+<dependency>
+     <groupId>com.alibaba</groupId>
+     <artifactId>fastjson</artifactId>
+     <version>1.2.21</version>
+</dependency>
+fastjson入口类是com.alibaba.fastjson.JSON，主要的API是JSON.toJSONString，和parseObject。 
+常用的序列化操作都可以在JSON类上的静态方法直接完成
+
+
+// 把JSON文本parse为JSONObject或者JSONArray 
+    public static final Object parse(String text); 
+    // 把JSON文本parse成JSONObject    
+    public static final JSONObject parseObject(String text);
+    // 把JSON文本parse为JavaBean 
+    public static final <T> T parseObject(String text, Class<T> clazz); 
+    // 把JSON文本parse成JSONArray 
+    public static final JSONArray parseArray(String text); 
+    //把JSON文本parse成JavaBean集合 
+    public static final <T> List<T> parseArray(String text, Class<T> clazz); 
+    // 将JavaBean序列化为JSON文本 
+    public static final String toJSONString(Object object); 
+    // 将JavaBean序列化为带格式的JSON文本 
+    public static final String toJSONString(Object object, boolean prettyFormat); 
+    //将JavaBean转换为JSONObject或者JSONArray。
+    public static final Object toJSON(Object javaObject); 
+	//将json对象转换为javabean
+	public static final <T> T toJavaObject(JSON json, Class<T> clazz) {
+        return TypeUtils.cast(json, clazz, ParserConfig.getGlobalInstance());
+    }
+另外这些方法都是静态方法,JSON类是抽象类,JSONObject和JSONArrary继承JSON抽象类,所以可以通过JSON. JSONObject. JSONArray去调用这些方法
+
+
+2.net库json包
+public class JsonUtil {
+
+
+      public static void main(String[] args) {
+      //Map转换json
+      Map map=new HashMap();
+      map.put("name","json");
+      map.put("bool", Boolean.TRUE);
+      map.put("int", new Integer(1));
+      map.put("arr", new String[]{"a","b"});
+      map.put("func","function(i){return this.arr[i]}");
+      JSONObject jsonObject=JSONObject.fromObject(map);
+      System.out.println(jsonObject);
+
+      //pojo to json   要实现 jopo的getter and setter
+   JSONObject pojoToJson=JSONObject.fromObject(new MyBean());
+   System.out.println(pojoToJson);
+      //获取json对应的元素
+   System.out.println("name is "+ pojoToJson.get("name"));
+
+   //json to pojo
+   String json = "{\"pojoid\":1,\"name\":\"json1\",\"options\":[\"1\",\"c\"],\"func1\":function(i){ return this.options[i]; }}";
+   JSONObject jsonObject2=JSONObject.fromObject(json);
+   Object bean=JSONObject.toBean(jsonObject2);
+   MyBean myBean=(MyBean) JSONObject.toBean(jsonObject2,MyBean.class);
+   System.out.println(myBean.getName());
+}
+}
+https://blog.csdn.net/u010034351/article/details/9856499
+
+public static JSONObject fromObject(Object object);将实体类 map json字符串等一些转换为JSONobject
+
+JsonConfig的常见用法
+https://blog.csdn.net/finality_000/article/details/36418655
