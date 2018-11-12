@@ -63,6 +63,53 @@ public class JsonUtil {
 https://blog.csdn.net/u010034351/article/details/9856499
 
 public static JSONObject fromObject(Object object);将实体类 map json字符串等一些转换为JSONobject
+public static Object toBean()
+https://www.cnblogs.com/mnn5/p/7465803.html
+public static JSONArray fromObject(Object object, JsonConfig jsonConfig)
+public static Object toArray(JSONArray jsonArray, Class objectClass, Map classMap) 
+public static List toList(JSONArray jsonArray, Class objectClass, Map classMap)
+https://www.cnblogs.com/zj0208/p/5853733.html
+java.lang.ClassCastException: net.sf.ezmorph.bean.MorphDynaBean cannot be cast to com.gwm.entity.pmob.CarDemandConfigEntity
+
+原因分析：JSONArray.toList(JSONArray jsonArray, Class objectClass)在遇到含有复杂对象的成员变量时，默认将该成员变量转化为net.sf.ezmorph.bean.MorphDynaBean类型；如成员变量是自定义对象的List类型，实际List集合中的对象是MorphDynaBean；
+
+解决方法：使用JSONArray提供的另外一个重载方法JSONArray.toArray(JSONArray jsonArray,Class objectClass,Map classMap)；
+
+classMap中定义成员变量的类型；key是成员变量名，value是成员变量类型。
+--------------------- 
+作者：mlxlong 
+来源：CSDN 
+原文：https://blog.csdn.net/u014488113/article/details/64919752 
+版权声明：本文为博主原创文章，转载请附上博文链接！
 
 JsonConfig的常见用法
 https://blog.csdn.net/finality_000/article/details/36418655
+
+
+3.GSON库
+toJson()将数据类型转换成json数据格式
+
+fromJson()将json格式数据转换成对应的数据  类型
+public class GsonUtil {
+    // 定义一个json对象
+    public static Gson gson = new Gson();
+
+    // 将json数据转换成对应的类型数据
+    public static <T> T parseJsonWithClass(String jsonData, Class<T> type) {
+        T result = gson.fromJson(jsonData, type);
+        return result;
+    }
+
+    // 将其他类型数据转换成json数据
+    public static String parseToJson(Object jsonData) {
+        String result = gson.toJson(jsonData);
+        return result;
+    }
+
+    // 将json数据转换成list集合
+    public static <T> List<T> parseJsonArrayWithGson(String jsonData, Class<T> type) {
+        List<T> result = gson.fromJson(jsonData, new TypeToken<List<T>>() {
+        }.getType());
+        return result;
+    }
+}
