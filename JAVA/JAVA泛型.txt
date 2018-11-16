@@ -1,0 +1,5 @@
+https://www.cnblogs.com/coprince/p/8603492.html
+https://www.cnblogs.com/lwbqqyumidi/p/3837629.html
+泛型的类型参数只能是类类型，不能是简单类型。
+不能对确切的泛型类型使用instanceof操作。如下面的操作是非法的，编译时会出错。
+　　if(ex_num instanceof Generic<Number>){ }
