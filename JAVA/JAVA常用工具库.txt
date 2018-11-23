@@ -1,0 +1,102 @@
+1.获取ip
+http://www.cnblogs.com/ITtangtang/p/3927768.html
+request.getRemoteAddr() 192.168.239.196
+
+request.getHeader("X-Forwarded-For") 58.63.227.162, 192.168.237.178, 192.168.238.218
+
+request.getHeader("X-Real-IP") 192.168.238.218
+
+所以访问的流程应该是这样，客户端58.63.227.162发出请求，经过192.168.237.178, 192.168.238.218两层转发，到了192.168.239.196这台NGINX上，NGINX就把X-Real-IP头设成了自己看到的remote_addr，也就是直接发给到他的192.168.238.218，这时候resin收到这个包，对resin来说直接发给他的remote_addr就是NGINX的ip，也就是192.168.239.196，那么resin里面的request.getRemoteAddr()就是192.168.239.196，那么在resin里拿最原始的ip逻辑（也就是拿能够知道的最外层的ip）应该是这样：
+
+            如果XFF不为空，拿XFF的左边第一个
+
+            如果XFF为空，拿XRI
+
+            如果XRI为空，只能拿request.getRemoteAddr()，也就是只能拿到最直接发给他的机器ip了，
+
+其他都不可考究,参考代码如下：
+
+第一种代码：
+ /**
+      * 从Request对象中获得客户端IP，处理了HTTP代理服务器和Nginx的反向代理截取了ip
+      * @param request
+      * @return ip
+      */
+    public static String getLocalIp(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String forwarded = request.getHeader("X-Forwarded-For");
+        String realIp = request.getHeader("X-Real-IP");
+
+        String ip = null;
+        if (realIp == null) {
+            if (forwarded == null) {
+                ip = remoteAddr;
+            } else {
+                ip = remoteAddr + "/" + forwarded.split(",")[0];
+            }
+        } else {
+            if (realIp.equals(forwarded)) {
+                ip = realIp;
+            } else {
+                if(forwarded != null){
+                    forwarded = forwarded.split(",")[0];
+                }
+                ip = realIp + "/" + forwarded;
+            }
+        }
+        return ip;
+    }
+	
+	第二种代码:
+	public static String getIp(HttpServletRequest request) {
+ 2         String remoteAddr = request.getRemoteAddr();
+ 3         String forwarded = request.getHeader("X-Forwarded-For");
+ 4         String realIp = request.getHeader("X-Real-IP");
+ 5 
+ 6         String ip = null;
+ 7         if (realIp == null) {
+ 8             if (forwarded == null) {
+ 9                 ip = remoteAddr;
+10             } else {
+11                 ip = remoteAddr + "/" + forwarded;
+12             }
+13         } else {
+14             if (realIp.equals(forwarded)) {
+15                 ip = realIp;
+16             } else {
+17                 ip = realIp + "/" + forwarded.replaceAll(", " + realIp, "");
+18             }
+19         }
+20         return ip;
+21     }
+
+第三种代码:
+public static String getIp2(HttpServletRequest request) {
+ 2            String ip = request.getHeader("X-Forwarded-For");
+ 3            if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+ 4                //多次反向代理后会有多个ip值，第一个ip才是真实ip
+ 5                int index = ip.indexOf(",");
+ 6                if(index != -1){
+ 7                    return ip.substring(0,index);
+ 8                }else{
+ 9                    return ip;
+10                }
+11            }
+12            ip = request.getHeader("X-Real-IP");
+13            if(StringUtils.isNotEmpty(ip) && !"unKnown".equalsIgnoreCase(ip)){
+14                return ip;
+15            }
+16            return request.getRemoteAddr();
+17        }
+第三种是最合适的，最清晰理解的
+
+2.excel导入导出
+导出数据到excel并本地浏览器下载 导入excel数据到浏览器前端列表中
+https://blog.csdn.net/qinyf2015/article/details/78810622
+https://blog.csdn.net/anialy/article/details/8714162
+https://blog.csdn.net/expect521/article/details/81122642
+https://blog.csdn.net/weixin_41172767/article/details/80939748
+https://www.cnblogs.com/daiyuanbao/p/7126402.html
+https://www.cnblogs.com/liushisaonian/p/7098125.html
+https://www.cnblogs.com/liushisaonian/p/7098125.html
+https://blog.csdn.net/u013322876/article/details/72859089

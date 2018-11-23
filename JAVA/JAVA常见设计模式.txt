@@ -191,3 +191,278 @@ posted @ 2017-12-04 17:10 garryfu 阅读(24976) 评论(0) 编辑 收藏
 
 https://blog.csdn.net/fuzhongmin05/article/details/71001857
 必须使用volatile关键字修饰单例引用
+
+4.原型模式
+java深拷贝和浅拷贝
+https://www.cnblogs.com/acode/p/6306887.html
+public class Student implements Cloneable {
+ 2     
+ 3     private String name;
+ 4     
+ 5     private int age;
+ 6     
+ 7     private Professor professor;
+ 8 
+ 9     public String getName() {
+10         return name;
+11     }
+12 
+13     public void setName(String name) {
+14         this.name = name;
+15     }
+16 
+17     public int getAge() {
+18         return age;
+19     }
+20 
+21     public void setAge(int age) {
+22         this.age = age;
+23     }
+24 
+25     public Professor getProfessor() {
+26         return professor;
+27     }
+28 
+29     public void setProfessor(Professor professor) {
+30         this.professor = professor;
+31     }
+32 
+33     @Override
+34     public String toString() {
+35         return "Student [name=" + name + ", age=" + age + ", professor="
+36                 + professor + "]";
+37     }
+38     
+39     public Object clone() throws CloneNotSupportedException{
+40         return super.clone();
+41     }
+42 
+43 }
+其中，Professor类同样为自定义类：
+public class Professor {
+
+    private String name;
+
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "Professor [name=" + name + ", age=" + age + "]";
+    }
+
+}
+然而，当自定义类的字段的类型不是基本数据类型时，上面实现了clone()方法会导致问题，不信看下面的代码：
+public class ShadowCopy {
+
+    public static void main(String[] args) {
+        Professor p1 = new Professor();
+        p1.setName("Professor Zhang");
+        p1.setAge(30);
+
+        Student s1 = new Student();
+        s1.setName("xiao ming");
+        s1.setAge(18);
+        s1.setProfessor(p1);
+
+        System.out.println(s1);
+
+        try {
+            Student s2 = (Student) s1.clone();
+            Professor p2 = s2.getProfessor();
+            p2.setName("Professor Li");
+            p2.setAge(45);
+            s2.setProfessor(p2);
+            System.out.println("复制后的：s1 = " + s1);
+            System.out.println("复制后的：s2 = " + s2);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
+【运行结果1】
+
+1 Student [name=xiao ming, age=18, professor=Professor [name=Professor Zhang, age=30]]
+2 复制后的：s1 = Student [name=xiao ming, age=18, professor=Professor [name=Professor Li, age=45]]
+3 复制后的：s2 = Student [name=xiao ming, age=18, professor=Professor [name=Professor Li, age=45]]
+【结果分析】
+
+学生s1的导师为30岁的Professor Zhang，恰好学生s2与学生s1同名同岁，但是s2的导师为45岁的Professor Li，于是我们顺理成章地复制复制s1并复制给s2，再修改下s2的导师的信息。可是，问题出现了，当我们修改了s2的导师后，s2的信息是对了，但是s1的导师信息也跟着修改了，这可不是我们期望的。
+
+【问题分析】
+
+程序实例1中的问题出在哪儿呢？我们已经对Student类实现了clone()方法，怎么还是出问题了呢？我们在看下面的代码：
+
+【程序实例2】
+public class ShadowCopy {
+
+    public static void main(String[] args) {
+        Professor p1 = new Professor();
+        p1.setName("Professor Zhang");
+        p1.setAge(30);
+
+        Student s1 = new Student();
+        s1.setName("xiao ming");
+        s1.setAge(18);
+        s1.setProfessor(p1);
+
+        System.out.println(s1);
+
+        try {
+            Student s2 = (Student) s1.clone();
+            s2.setName("xiao hong");
+            s2.setAge(17);
+            Professor p2 = s2.getProfessor();
+            p2.setName("Professor Li");
+            p2.setAge(45);
+            s2.setProfessor(p2);
+            System.out.println("复制后的：s1 = " + s1);
+            System.out.println("复制后的：s2 = " + s2);
+        } catch (CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+}
+【运行结果】
+
+1 Student [name=xiao ming, age=18, professor=Professor [name=Professor Zhang, age=30]]
+2 复制后的：s1 = Student [name=xiao ming, age=18, professor=Professor [name=Professor Li, age=45]]
+3 复制后的：s2 = Student [name=xiao hong, age=17, professor=Professor [name=Professor Li, age=45]]
+【结果分析】
+
+这次，我们在clone后，又修改了s2的name和age，从结果可以看出，s1的name和age并没有因为s2的修改而改变。
+
+ 
+
+结合程序实例1和程序实例2，我们发现Student的字段如果不是一个引用时，修改clone()得到对象的该字段(name, age)时并不会影响原来的对象，但是当字段为一个引用时，修改clone()得到对象的该字段(professor)时并会影响原来的对象。上面实现的clone()方法为浅复制（shadow copy）。
+
+ 
+
+如果想要clone()得到的新对象的修改不会影响被复制的对象的字段时，我们就需要实现深复制（deep copy），代码修改如下：
+public class Professor implements Cloneable {
+
+    private String name;
+
+    private int age;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+    
+    @Override
+    public String toString() {
+        return "Professor [name=" + name + ", age=" + age + "]";
+    }
+
+    public Object clone() throws CloneNotSupportedException{
+        return super.clone();
+    }
+
+}
+public class Student implements Cloneable {
+    
+    private String name;
+    
+    private int age;
+    
+    private Professor professor;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
+    @Override
+    public String toString() {
+        return "Student [name=" + name + ", age=" + age + ", professor="
+                + professor + "]";
+    }
+    
+    public Object clone() throws CloneNotSupportedException{
+        Student newStudent = (Student) super.clone();
+        newStudent.professor = (Professor) professor.clone();
+        return newStudent;
+    }
+
+}
+再次运行【程序实例2】得到的结果为：
+
+1 Student [name=xiao ming, age=18, professor=Professor [name=Professor Zhang, age=30]]
+2 复制后的：s1 = Student [name=xiao ming, age=18, professor=Professor [name=Professor Zhang, age=30]]
+3 复制后的：s2 = Student [name=xiao hong, age=17, professor=Professor [name=Professor Li, age=45]]
+可以看到：修改clone()得到的s2的任何字段都不会影响s1的字段，这也就是深复制的作用。
+
+对象拷贝时，类的构造函数是不会被执行的。 一个实现了 Cloneable 并重写了 clone 方法的类 A,有一个无参构造或有参构造 B，通过 new 关键字产生了一个对象 S，再然后通过 S.clone()方式产生了一个新的
+对象 T，那么在对象拷贝时构造函数 B 是不会被执行的，
+对象拷贝时确实构造函数没有被执行，这个从原理来讲也是可以讲得通的，Object 类的 clone 方法的
+原理是从内存中（具体的说就是堆内存）以二进制流的方式进行拷贝，重新分配一个内存块，那构造函数
+没有被执行也是非常正常的了。
+final 类型修饰的成员变量不能进行深拷贝
+原型模式适合在什么场景使用？一是类初始化需要消化非常多的资源，这个资源包括数据、硬件资源等；
+二是通过 new 产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式；
+三是一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用。
+在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现，通过 clone的方法创建一个对象，然后由工厂方法提供给调用者。
+原型模式先产生出一个包含大量共有信息的类，然后可以拷贝出副本，修正细节信息，建立了一个完整的个性对象。
+https://blog.csdn.net/unifirst/article/details/50482031
+Spring中依赖注入的默认对象为单例形式，@Scope(“prototype”)注解可以将其改变为原型模式。
+
+改变底层（如service层）的对象为原型时，同时改变上层调用层（如controller层）的调用方式，原型模式才会生效
+
+
+5.反射模式
+https://blog.csdn.net/codejas/article/details/78635926
+https://www.cnblogs.com/luoxn28/p/5686794.html
+
+6.动态代理模式
+
+
