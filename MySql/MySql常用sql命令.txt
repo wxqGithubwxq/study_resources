@@ -40,3 +40,23 @@ https://www.cnblogs.com/wuyun-blog/p/6178303.html
 select*from 表名 [where 条件];
 select field1,field2,...fieldn... from 表名 [where 条件];
 https://www.cnblogs.com/drake-guo/p/6104654.html
+
+7.判断语句
+case name 
+when '' then '' 
+end
+
+8.ON DUPLICATE KEY UPDATE vial_code=VALUES(vial_code),
+https://blog.csdn.net/dragonpeng2008/article/details/53887387
+https://blog.csdn.net/qq2430/article/details/80511640
+
+9.mybatis 
+<choose>
+<when test="taskType == '6'.toString">
+</when>
+<otherwise>
+</otherwise>
+
+10.CONCAT  #{posArr} like concat('%',store_pos,'%')	
+GROUP_CONCAT    GROUP_CONCAT(box_code) as code
+https://baijiahao.baidu.com/s?id=1595349117525189591&wfr=spider&for=pc

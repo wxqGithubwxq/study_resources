@@ -9,6 +9,36 @@ stop_flag进行事务回滚的判定，而对于自定义函数里所有的操作都具有原子性，而对于cre
 提交的语句是不允许出现在自定义函数中的。DDL操作市隐式提交的，所以放在存储过程中会产生一定的影响，应根据具体情况
 作出调整，避免对整个应用程序产生影响。另外，在同一个service的事务方法里面调用另一个事务方法也会造成事务不生效
 
+
+原因：
+spring 在扫描bean的时候会扫描方法上是否包含@Transactional注解，如果包含，spring会为这个bean动态地生成一个子类（即代理类，proxy），
+代理类是继承原来那个bean的。此时，当这个有注解的方法被调用的时候，实际上是由代理类来调用的，代理类在调用之前就会启动transaction。
+然而，如果这个有注解的方法是被同一个类中的其他方法调用的，那么该方法的调用并没有通过代理类，而是直接通过原来的那个bean，所以就不会启动transaction，
+我们看到的现象就是@Transactional注解无效。
+
+@Transactional 只能应用到 public 方法才有效
+只有@Transactional 注解应用到 public 方法，才能进行事务管理。这是因为在使用 Spring AOP 代理时，Spring 在调用在图 1 中的 TransactionInterceptor 在目标方法执行前后进行拦截之前，
+DynamicAdvisedInterceptor（CglibAopProxy 的内部类）的的 intercept 方法或 JdkDynamicAopProxy 的 invoke 方法会间接调用 AbstractFallbackTransactionAttributeSource（
+Spring 通过这个类获取表 1. @Transactional 注解的事务属性配置属性信息）的 computeTransactionAttribute 方法。
+
+虽然 @Transactional 注解可以作用于接口、接口方法、类以及类方法上，但是 Spring 建议不要在接口或者接口方法上使用该注解，因为这只有在使用基于接口的代理时它才会生效。
+另外， @Transactional 注解应该只被应用到 public 方法上，这是由 Spring AOP 的本质决定的。如果你在 protected、private 或者默认可见性的方法上使用 @Transactional 注解，这将被忽略，
+也不会抛出任何异常。
+public class Foo {
+
+    @Timed
+    public void bar() { /* … */ }
+
+    public void baz() {
+        ((Foo) AopContext.currentProxy()).bar();
+    }
+}https://blog.csdn.net/dapinxiaohuo/article/details/52092447
+--------------------- 
+作者：rainbow702 
+来源：CSDN 
+原文：https://blog.csdn.net/rainbow702/article/details/53907474 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
 关于嵌套事务
 https://www.cnblogs.com/softidea/p/5962568.html
 https://blog.csdn.net/yangchangyong0/article/details/51960143

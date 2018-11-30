@@ -463,6 +463,543 @@ Spring中依赖注入的默认对象为单例形式，@Scope(“prototype”)注
 https://blog.csdn.net/codejas/article/details/78635926
 https://www.cnblogs.com/luoxn28/p/5686794.html
 
-6.动态代理模式
+6.代理模式
+(1)静态代理
+静态代理在使用时,需要定义接口或者父类,被代理对象与代理对象一起实现相同的接口或者是继承相同父类.
+
+下面举个案例来解释:
+模拟保存动作,定义一个保存动作的接口:IUserDao.java,然后目标对象实现这个接口的方法UserDao.java,此时如果使用静态代理方式,就需要在代理对象(UserDaoProxy.java)中也实现IUserDao接口.调用的时候通过调用代理对象的方法来调用目标对象.
+需要注意的是,代理对象与目标对象要实现相同的接口,然后通过调用相同的方法来调用目标对象的方法
+
+代码示例:
+接口:IUserDao.java
+
+/**
+ * 接口
+ */
+public interface IUserDao {
+
+    void save();
+}
+目标对象:UserDao.java
+
+/**
+ * 接口实现
+ * 目标对象
+ */
+public class UserDao implements IUserDao {
+    public void save() {
+        System.out.println("----已经保存数据!----");
+    }
+}
+代理对象:UserDaoProxy.java
+
+/**
+ * 代理对象,静态代理
+ */
+public class UserDaoProxy implements IUserDao{
+    //接收保存目标对象
+    private IUserDao target;
+    public UserDaoProxy(IUserDao target){
+        this.target=target;
+    }
+
+    public void save() {
+        System.out.println("开始事务...");
+        target.save();//执行目标对象的方法
+        System.out.println("提交事务...");
+    }
+}
+测试类:App.java
+
+/**
+ * 测试类
+ */
+public class App {
+    public static void main(String[] args) {
+        //目标对象
+        UserDao target = new UserDao();
+
+        //代理对象,把目标对象传给代理对象,建立代理关系
+        UserDaoProxy proxy = new UserDaoProxy(target);
+
+        proxy.save();//执行的是代理的方法
+    }
+}
+静态代理总结:
+1.可以做到在不修改目标对象的功能前提下,对目标功能扩展.
+2.缺点:
+
+因为代理对象需要与目标对象实现一样的接口,所以会有很多代理类,类太多.同时,一旦接口增加方法,目标对象与代理对象都要维护.
+如何解决静态代理中的缺点呢?答案是可以使用动态代理方式
+(2)动态代理
+动态代理有以下特点:
+1.代理对象,不需要实现接口
+2.代理对象的生成,是利用JDK的API,动态的在内存中构建代理对象(需要我们指定创建代理对象/目标对象实现的接口的类型)
+3.动态代理也叫做:JDK代理,接口代理
+JDK中生成代理对象的API
+代理类所在包:java.lang.reflect.Proxy
+JDK实现代理只需要使用newProxyInstance方法,但是该方法需要接收三个参数,完整的写法是:
+
+static Object newProxyInstance(ClassLoader loader, Class<?>[] interfaces,InvocationHandler h )
+注意该方法是在Proxy类中是静态方法,且接收的三个参数依次为:
+
+ClassLoader loader,:指定当前目标对象使用类加载器,获取加载器的方法是固定的
+Class<?>[] interfaces,:目标对象实现的接口的类型,使用泛型方式确认类型
+InvocationHandler h:事件处理,执行目标对象的方法时,会触发事件处理器的方法,会把当前执行目标对象的方法作为参数传入
+代码示例:
+接口类IUserDao.java以及接口实现类,目标对象UserDao是一样的,没有做修改.在这个基础上,增加一个代理工厂类(ProxyFactory.java),将代理类写在这个地方,然后在测试类(需要使用到代理的代码)中先建立目标对象和代理对象的联系,然后代用代理对象的中同名方法
+
+代理工厂类:ProxyFactory.java
 
 
+/**
+ * 创建动态代理对象
+ * 动态代理不需要实现接口,但是需要指定接口类型
+ */
+public class ProxyFactory{
+
+    //维护一个目标对象
+    private Object target;
+    public ProxyFactory(Object target){
+        this.target=target;
+    }
+
+   //给目标对象生成代理对象
+    public Object getProxyInstance(){
+        return Proxy.newProxyInstance(
+                target.getClass().getClassLoader(),
+                target.getClass().getInterfaces(),
+                new InvocationHandler() {
+                    @Override
+                    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+                        System.out.println("开始事务2");
+                        //执行目标对象方法
+                        Object returnValue = method.invoke(target, args);
+                        System.out.println("提交事务2");
+                        return returnValue;
+                    }
+                }
+        );
+    }
+
+}
+测试类:App.java
+
+
+/**
+ * 测试类
+ */
+public class App {
+    public static void main(String[] args) {
+        // 目标对象
+        IUserDao target = new UserDao();
+        // 【原始的类型 class cn.itcast.b_dynamic.UserDao】
+        System.out.println(target.getClass());
+
+        // 给目标对象，创建代理对象
+        IUserDao proxy = (IUserDao) new ProxyFactory(target).getProxyInstance();
+        // class $Proxy0   内存中动态生成的代理对象
+        System.out.println(proxy.getClass());
+
+        // 执行方法   【代理对象】
+        proxy.save();
+    }
+}
+总结:
+代理对象不需要实现接口,但是目标对象一定要实现接口,否则不能用动态代理
+3.Cglib代理
+上面的静态代理和动态代理模式都是要求目标对象是实现一个接口的目标对象,但是有时候目标对象只是一个单独的对象,并没有实现任何的接口,这个时候就可以使用以目标对象子类的方式类实现代理,这种方法就叫做:Cglib代理
+
+Cglib代理,也叫作子类代理,它是在内存中构建一个子类对象从而实现对目标对象功能的扩展.
+
+JDK的动态代理有一个限制,就是使用动态代理的对象必须实现一个或多个接口,如果想代理没有实现接口的类,就可以使用Cglib实现.
+Cglib是一个强大的高性能的代码生成包,它可以在运行期扩展java类与实现java接口.它广泛的被许多AOP的框架使用,例如Spring AOP和synaop,为他们提供方法的interception(拦截)
+Cglib包的底层是通过使用一个小而块的字节码处理框架ASM来转换字节码并生成新的类.不鼓励直接使用ASM,因为它要求你必须对JVM内部结构包括class文件的格式和指令集都很熟悉.
+Cglib子类代理实现方法:
+1.需要引入cglib的jar文件,但是Spring的核心包中已经包括了Cglib功能,所以直接引入pring-core-3.2.5.jar即可.
+2.引入功能包后,就可以在内存中动态构建子类
+3.代理的类不能为final,否则报错
+4.目标对象的方法如果为final/static,那么就不会被拦截,即不会执行目标对象额外的业务方法.
+代码示例:
+目标对象类:UserDao.java
+
+/**
+ * 目标对象,没有实现任何接口
+ */
+public class UserDao {
+
+    public void save() {
+        System.out.println("----已经保存数据!----");
+    }
+}
+Cglib代理工厂:ProxyFactory.java
+
+/**
+ * Cglib子类代理工厂
+ * 对UserDao在内存中动态构建一个子类对象
+ */
+public class ProxyFactory implements MethodInterceptor{
+    //维护目标对象
+    private Object target;
+
+    public ProxyFactory(Object target) {
+        this.target = target;
+    }
+
+    //给目标对象创建一个代理对象
+    public Object getProxyInstance(){
+        //1.工具类
+        Enhancer en = new Enhancer();
+        //2.设置父类
+        en.setSuperclass(target.getClass());
+        //3.设置回调函数
+        en.setCallback(this);
+        //4.创建子类(代理对象)
+        return en.create();
+
+    }
+
+    @Override
+    public Object intercept(Object obj, Method method, Object[] args, MethodProxy proxy) throws Throwable {
+        System.out.println("开始事务...");
+
+        //执行目标对象的方法
+        Object returnValue = method.invoke(target, args);
+
+        System.out.println("提交事务...");
+
+        return returnValue;
+    }
+}
+测试类:
+
+/**
+ * 测试类
+ */
+public class App {
+
+    @Test
+    public void test(){
+        //目标对象
+        UserDao target = new UserDao();
+
+        //代理对象
+        UserDao proxy = (UserDao)new ProxyFactory(target).getProxyInstance();
+
+        //执行代理对象的方法
+        proxy.save();
+    }
+}
+在Spring的AOP编程中:
+如果加入容器的目标对象有实现接口,用JDK代理
+如果目标对象没有实现接口,用Cglib代理
+https://www.cnblogs.com/cenyu/p/6289209.html
+
+7.迭代器模式
+https://www.cnblogs.com/zhihyuan0420/articles/5684603.html
+迭代器模式又叫做游标（Cursor）模式，其作用是提供一种方法访问一个容器元素中的各个对象，而又不暴露该对象的内部细节。
+迭代器模式的优缺点
+
+优点
+
+1、简化了便利方式，对于对象集合的遍历，还是比较麻烦的，对于数组或者有序列表，我们还可以通过下标来获取，但用户需要在对集合很了解的情况下，才能自行遍历对象（有时即使你了解了集合，还未必能直接遍历，比如上面的HashSet就没有提供get方法）。而引入了迭代器方法后，用户用起来就简单地多了
+
+2、可以供多种遍历方式，比如对于有序列表，可以正向遍历也可以倒序遍历，只要迭代器实现得好
+
+3、封装性好，用户只需要得到迭代器就可以遍历，而对于遍历算法则不用去关心
+
+缺点
+
+对于比较简单的遍历（数组或者有序列表），使用迭代器方式遍历较为繁琐而且遍历效率不高，使用迭代器的方式比较适合那些底层以链表形式实现的集合
+
+8.装饰者模式
+相信大家对于装饰模式已有一个初步了解，经常在面试的时候会被问到装饰模式与代理模式的区别。装饰模式意义在于对原有系统业务功能的扩展或者是装饰，而代理模式常用在原有系统中增加一些与业务无关的操作，例如日志、验证等功能。
+装饰者模式可以动态地给一个对象添加一些额外的职责。就增加功能来说，Decorator模式相比生成子类更为灵活。
+
+该模式的适用环境为：
+
+（1）在不影响其他对象的情况下，以动态、透明的方式给单个对象添加职责。
+
+（2）处理那些可以撤消的职责。
+
+（3）当不能采用生成子类的方法进行扩充时。一种情况是，可能有大量独立的扩展，为支持每一种组合将产生大量的子类，使得子类数目呈爆炸性增长。另一种情况可能是因为类定义被隐藏，或类定义不能用于生成子类。
+
+实现该模式的关键步骤：
+实现该模式的关键步骤：
+
+（1）Component（被装饰对象基类）：定义对象的接口，可以给这些对象动态增加职责；
+
+（2）ConcreteComponent（具体被装饰对象）：定义具体的对象，Decorator可以给它增加额外的职责；
+
+（3）Decorator（装饰者抽象类）：维护指向Component实例的引用，定义与Component一致的接口（也就是要继承或实现被装饰对象基类）；
+
+（4）ConcreteDecorator（具体装饰者）：具体的装饰对象，给内部持有的具体被装饰对象增加具体的职责；
+
+这样讲大家可能有些不好理解，那我们还是老规矩安静：
+
+入冬以后天气越来越冷了，下班之后，做为资深吃货，约上二三好友痛快的来场火锅盛宴再爽不过了。说到火锅，不得不提在成都吃过的大龙燚火锅，各种锅底，配菜应有尽有，但我最喜欢的还是大龙燚火锅原味锅底、麻辣牛肉、大刀毛肚、天味香肠、砣砣牛肉、麻辣排骨等，想想都流口水啊。
+
+说道这大家结合装饰者的实现步骤，应该有点感觉了吧，上文提到的锅底，其实就是被装饰对象的基类，配料其实就是装饰者抽象类，大龙燚火锅原味锅底这些具体的锅底也就是具体的被装饰对象了，麻辣牛肉、大刀毛肚、天味香肠、砣砣牛肉、麻辣排骨这些装饰锅底用的各种配菜也就是具体的装饰对象。说道这，大家应该都豁然开朗了吧，下面我们开始具体的代码实现：
+第一步：定义被装饰对象基类（可以是抽象类也可以是接口）
+
+1 public interface GuoDi {
+2     public float cost();//锅底当然要有价钱啦
+3     public String name();//名字也得有哦
+4 }
+第二步：定义具体被装饰对象（也就是各种锅底，这里定义两种）
+
+ 
+
+复制代码
+ 1 public class YuanYang implements GuoDi {
+ 2     @Override
+ 3     public float cost() {
+ 4         return 48.0f;
+ 5     }
+ 6     @Override
+ 7     public String name() {
+ 8         return "鸳鸯锅底";
+ 9     }
+10 }
+11 public class DaLongYan implements GuoDi{
+12     @Override
+13     public float cost() {
+14         return 59.0f;
+15     }
+16     @Override
+17     public String name() {
+18         return "大龙燚火锅原味锅底";
+19     }
+20 }
+复制代码
+ 
+
+第三步：定义装饰者抽象类
+
+复制代码
+ 1 public abstract class PeiCai implements GuoDi {
+ 2     private GuoDi guodi;
+ 3     public FoodDecorator(GuoDi guodi) {
+ 4         super();
+ 5         this.guodi = guodi;
+ 6     }
+ 7     @Override
+ 8     public float cost() {
+ 9         return guodi.cost();
+10     }
+11     @Override
+12     public String name() {
+13         return guodi.name();
+14     }
+15 }
+复制代码
+第四步：定义具体的装饰者对象
+
+复制代码
+ 1 public class MaLaNiuRou extends PeiCai {
+ 2     public MaLaNiuRou(GuoDi guodi) {
+ 3         super(guodi);
+ 4     }
+ 5     @Override
+ 6     public float cost() {
+ 7         return super.cost()+46f;
+ 8     }
+ 9     @Override
+10     public String name() {
+11         return super.name()+"+麻辣牛肉";
+12     }
+13 }
+14 public class MaoDu extends PeiCai {
+15 
+16     public MaoDu(GuoDi guodi) {
+17         super(guodi);
+18     }
+19     @Override
+20     public float cost() {
+21         return super.cost()+30f;
+22     }
+23     @Override
+24     public String name() {
+25         return super.name()+"+大刀毛肚";
+26     }
+27 }
+复制代码
+测试类：
+
+ 
+
+复制代码
+1 public class Test {
+2     public static void main(String[] args) {
+3         GuoDi  guodi = new DaLongYan ();//点个大龙燚火锅原味锅底
+4         MaLaNiuRou y = new MaLaNiuRou(guodi);//来个麻辣牛肉
+5         MaoDu  x = new MaoDu(y);//在麻辣牛肉的基础上再来个大刀毛肚
+6         System.out.println("一共点了"+x.name()+",共消费"+s.cost());
+7     }
+8 }
+复制代码
+ 
+
+输出结果：
+
+ 1 一共点了大龙燚火锅原味锅底+麻辣牛肉+大刀毛肚,共消费135 
+
+不知道大家这顿吃的满意不，不行的话，咱去成都来顿真正的装饰者设计模式，看我不把我的大龙燚火锅原味锅底装饰的让你走不动道羡慕。
+
+9.策略模式
+https://www.cnblogs.com/java-my-life/archive/2012/05/10/2491891.html
+
+10.桥接模式
+桥接模式(Bridge Pattern)：将抽象部分与它的实现部分分离，使它们都可以独立地变化。它是一种对象结构型模式，又称为柄体(Handle and Body)模式或接口(Interface)模式。
+https://www.cnblogs.com/lfxiao/p/6815760.html
+原创作品，可以转载，但是请标注出处地址http://www.cnblogs.com/V1haoge/p/6497919.html
+
+　　这里摘抄一份他处的概念，你可以不必理会，先看下面得讲解与实例，然后返回来理解概念，不然抽象的概念会让你崩溃...
+
+　　桥接（Bridge）是用于把抽象化与实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型模式，它通过提供抽象化和实现化之间的桥接结构，来实现二者的解耦。
+
+　　这种模式涉及到一个作为桥接的接口，使得实体类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。
+
+　　个人理解：桥接是一个接口，它与一方应该是绑定的，也就是解耦的双方中的一方必然是继承这个接口的，这一方就是实现方，而另一方正是要与这一方解耦的抽象方，如果不采用桥接模式，一般我们的处理方式是直接使用继承来实现，这样双方之间处于强链接，类之间关联性极强，如要进行扩展，必然导致类结构急剧膨胀。采用桥接模式，正是为了避免这一情况的发生，将一方与桥绑定，即实现桥接口，另一方在抽象类中调用桥接口（指向的实现类），这样桥方可以通过实现桥接口进行单方面扩展，而另一方可以继承抽象类而单方面扩展，而之间的调用就从桥接口来作为突破口，不会受到双方扩展的任何影响。
+
+　　下面的实例能真正体现着一点：
+
+　　实例准备：我们假设有一座桥，桥左边为A，桥右边为B，A有A1，A2，A3等，表示桥左边的三个不同地方，B有B1，B2，B3等，表示桥右边的三个不同地方，假设我们要从桥左侧A出发到桥的右侧B，我们可以有多重方案，A1到B1，A1到B2，A1到B3，A2到B1...等等，以此为例，代码如下：
+
+桥接口：Qiao
+
+1 public interface Qiao {
+2     //目的地B
+3     void targetAreaB();
+4 }
+目的地B1,B2,B3：
+
+复制代码
+ 1 /**
+ 2  * 目的地B1
+ 3  */
+ 4 public class AreaB1 implements Qiao {
+ 5 
+ 6     @Override
+ 7     public void targetAreaB() {
+ 8         System.out.println("我要去B1");
+ 9     }
+10 
+11 }
+12 
+13 /**
+14  * 目的地B2
+15  */
+16 public class AreaB2 implements Qiao {
+17 
+18     @Override
+19     public void targetAreaB() {
+20         System.out.println("我要去B2");
+21     }
+22 
+23 }
+24 
+25 /**
+26  * 目的地B3
+27  */
+28 public class AreaB3 implements Qiao {
+29 
+30     @Override
+31     public void targetAreaB() {
+32         System.out.println("我要去B3");
+33     }
+34 
+35 }
+复制代码
+抽象来源地A：AreaA
+
+复制代码
+1 public abstract class AreaA {
+2     //引用桥接口
+3     Qiao qiao;
+4     //来源地
+5     abstract void fromAreaA();
+6 }
+复制代码
+来源地A1，A2，A3：
+
+复制代码
+ 1 /**
+ 2  * 来源地A1
+ 3  */
+ 4 public class AreaA1 extends AreaA {
+ 5 
+ 6     @Override
+ 7     void fromAreaA() {
+ 8         System.out.println("我来自A1");
+ 9     }
+10     
+11 }
+12 
+13 /**
+14  * 来源地A2
+15  */
+16 public class AreaA2 extends AreaA {
+17 
+18     @Override
+19     void fromAreaA() {
+20         System.out.println("我来自A2");
+21     }
+22 
+23 }
+24 
+25 /**
+26  * 来源地A3
+27  */
+28 public class AreaA3 extends AreaA {
+29 
+30     @Override
+31     void fromAreaA() {
+32         System.out.println("我来自A3");
+33     }
+34 
+35 }
+复制代码
+测试类：Clienter
+
+复制代码
+1 public class Clienter {
+2     public static void main(String[] args) {
+3         AreaA a = new AreaA2();
+4         a.qiao = new AreaB3();
+5         a.fromAreaA();
+6         a.qiao.targetAreaB();
+7     }
+8 }
+复制代码
+运行结果：
+
+我来自A2
+我要去B3
+　　如何，只要你认真看完了实例，你就明白了这种模式的好处，现在我们要添加来源地和目的地，只要继续继承AreaA和实现Qiao即可，之前我所说的绑定，正式此处将桥与目的地绑定在一起，使用一个接口完成。
+
+　　其实要完成桥接模式，注意点并不多，重在理解模式的使用场景。
+
+　　注意点：
+
+　　　　1、定义一个桥接口，使其与一方绑定，这一方的扩展全部使用实现桥接口的方式。
+
+　　　　2、定义一个抽象类，来表示另一方，在这个抽象类内部要引入桥接口，而这一方的扩展全部使用继承该抽象类的方式。
+
+　　其实我们可以发现桥接模式应对的场景有方向性的，桥绑定的一方都是被调用者，属于被动方，抽象方属于主动方。
+
+　　其实我的JDK提供的JDBC数据库访问接口API正是经典的桥接模式的实现者，接口内部可以通过实现接口来扩展针对不同数据库的具体实现来进行扩展，而对外的仅仅只是一个统一的接口调用，调用方过于抽象，可以将其看做每一个JDBC调用程序（这是真实实物，当然不存在抽象）
+
+　　下面来理解一下开头的概念：
+
+　　桥接（Bridge）是用于把抽象化与实现化解耦，使得二者可以独立变化。这种类型的设计模式属于结构型模式，它通过提供抽象化和实现化之间的桥接结构，来实现二者的解耦。
+
+　　这种模式涉及到一个作为桥接的接口，使得实体类的功能独立于接口实现类。这两种类型的类可被结构化改变而互不影响。
+
+ 
+
+　　理解：此处抽象化与实现化分别指代实例中的双方，而且实现化对应目的地方（通过实现桥接口进行扩展），抽象方对应来源地方（通过继承抽象类来进行扩展），如果我们不使用桥接模式，我们会怎么想实现这个实例呢？很简单，我们分别定义来源地A1、A2、A3类和目的地B1、B2、B3，然后具体的实现就是，A1到B1一个类，A1到B2一个类，等，如果我们要扩展了A和B ,要直接增加An类和Bn类，如此编写不说类内部重复性代码多，而且还会导致类结构的急剧膨胀，最重要的是，在通过继承实现路径的时候，会造成双方耦合性增大，而这又进一步加剧了扩展的复杂性。使用桥结构模式可以很好地规避这些问题：重在解耦。
+
+11.适配器模式
+https://www.cnblogs.com/V1haoge/p/6479118.html
