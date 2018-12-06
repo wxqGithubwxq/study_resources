@@ -1,0 +1,172 @@
+1.消息队列组件
+https://blog.csdn.net/qq_39470733/article/details/80576013
+ActiveMQ RabbitMQ rocketmq和kafka ZeroMQ MetaMQ
+我们可以看出，RabbitMQ版本发布比ActiveMq频繁很多。至于RocketMQ和kafka就不带大家看了，总之也比ActiveMQ活跃的多。详情，可自行查阅。
+
+再来一个性能对比表
+
+综合上面的材料得出以下两点:
+
+(1)中小型软件公司，建议选RabbitMQ.一方面，erlang语言天生具备高并发的特性，而且他的管理界面用起来十分方便。正所谓，成也萧何，败也萧何！他的弊端也在这里，虽然RabbitMQ是开源的，然而国内有几个能定制化开发erlang的程序员呢？所幸，RabbitMQ的社区十分活跃，可以解决开发过程中遇到的bug，这点对于中小型公司来说十分重要。
+
+不考虑rocketmq和kafka的原因是，一方面中小型软件公司不如互联网公司，数据量没那么大，选消息中间件，应首选功能比较完备的，所以kafka排除。
+
+不考虑rocketmq的原因是，rocketmq是阿里出品，如果阿里放弃维护rocketmq，中小型公司一般抽不出人来进行rocketmq的定制化开发，因此不推荐。
+
+(2)大型软件公司，根据具体使用在rocketMq和kafka之间二选一。一方面，大型软件公司，具备足够的资金搭建分布式环境，也具备足够大的数据量。
+
+针对rocketMQ,大型软件公司也可以抽出人手对rocketMQ进行定制化开发，毕竟国内有能力改JAVA源码的人，还是相当多的。至于kafka，根据业务场景选择，如果有日志采集功能，肯定是首选kafka了。具体该选哪个，看使用场景
+--------------------- 
+作者：一页知秋否 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_39470733/article/details/80576013 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+2.如何保证消息不被重复消费？
+分析:这个问题其实换一种问法就是，如何保证消息队列的幂等性?这个问题可以认为是消息队列领域的基本问题。换句话来说，是在考察你的设计能力，这个问题的回答可以根据具体的业务场景来答，没有固定的答案。
+
+回答:先来说一下为什么会造成重复消费?
+
+其实无论是那种消息队列，造成重复消费原因其实都是类似的。正常情况下，消费者在消费消息时候，消费完毕后，会发送一个确认信息给消息队列，消息队列就知道该消息被消费了，就会将该消息从消息队列中删除。只是不同的消息队列发送的确认信息形式不同,例如RabbitMQ是发送一个ACK确认消息，RocketMQ是返回一个CONSUME_SUCCESS成功标志，kafka实际上有个offset的概念，简单说一下(如果还不懂，出门找一个kafka入门到精通教程),就是每一个消息都有一个offset，kafka消费过消息后，需要提交offset，让消息队列知道自己已经消费过了。那造成重复消费的原因?，就是因为网络传输等等故障，确认信息没有传送到消息队列，导致消息队列不知道自己已经消费过该消息了，再次将该消息分发给其他的消费者。
+
+如何解决?这个问题针对业务场景来答分以下几点
+
+  (1)比如，你拿到这个消息做数据库的insert操作。那就容易了，给这个消息做一个唯一主键，那么就算出现重复消费的情况，就会导致主键冲突，避免数据库出现脏数据。
+  (2)再比如，你拿到这个消息做redis的set的操作，那就容易了，不用解决，因为你无论set几次结果都是一样的，set操作本来就算幂等操作。
+  (3)如果上面两种情况还不行，上大招。准备一个第三方介质,来做消费记录。以redis为例，给消息分配一个全局id，只要消费过该消息，将<id,message>以K-V形式写入redis。那消费者开始消费前，先去redis中查询有没消费记录即可。
+--------------------- 
+作者：一页知秋否 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_39470733/article/details/80576013 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+3. 如何保证消费的可靠性传输?
+分析:我们在使用消息队列的过程中，应该做到消息不能多消费，也不能少消费。如果无法做到可靠性传输，可能给公司带来千万级别的财产损失。同样的，如果可靠性传输在使用过程中，没有考虑到，这不是给公司挖坑么，你可以拍拍屁股走了，公司损失的钱，谁承担。还是那句话，认真对待每一个项目，不要给公司挖坑。
+
+回答:其实这个可靠性传输，每种MQ都要从三个角度来分析:生产者弄丢数据、消息队列弄丢数据、消费者弄丢数据
+
+RabbitMQ
+(1)生产者丢数据
+从生产者弄丢数据这个角度来看，RabbitMQ提供transaction和confirm模式来确保生产者不丢消息。
+transaction机制就是说，发送消息前，开启事务(channel.txSelect())，然后发送消息，如果发送过程中出现什么异常，事物就会回滚(channel.txRollback())，如果发送成功则提交事物(channel.txCommit())。
+
+然而缺点就是吞吐量下降了。因此，按照博主的经验，生产上用confirm模式的居多。一旦channel进入confirm模式，所有在该信道上面发布的消息都将会被指派一个唯一的ID(从1开始)，一旦消息被投递到所有匹配的队列之后，rabbitMQ就会发送一个Ack给生产者(包含消息的唯一ID)，这就使得生产者知道消息已经正确到达目的队列了.如果rabiitMQ没能处理该消息，则会发送一个Nack消息给你，你可以进行重试操作。处理Ack和Nack的代码如下所示:
+
+channel.addConfirmListener(new ConfirmListener() {  
+                @Override  
+                public void handleNack(long deliveryTag, boolean multiple) throws IOException {  
+                    System.out.println("nack: deliveryTag = "+deliveryTag+" multiple: "+multiple);  
+                }  
+                @Override  
+                public void handleAck(long deliveryTag, boolean multiple) throws IOException {  
+                    System.out.println("ack: deliveryTag = "+deliveryTag+" multiple: "+multiple);  
+                }  
+            });  
+(2)消息队列丢数据
+处理消息队列丢数据的情况，一般是开启持久化磁盘的配置。这个持久化配置可以和confirm机制配合使用，你可以在消息持久化磁盘后，再给生产者发送一个Ack信号。这样，如果消息持久化磁盘之前，rabbitMQ阵亡了，那么生产者收不到Ack信号，生产者会自动重发。
+
+那么如何持久化呢，这里顺便说一下吧，其实也很容易，就下面两步
+
+1、将queue的持久化标识durable设置为true,则代表是一个持久的队列
+2、发送消息的时候将deliveryMode=2
+
+这样设置以后，rabbitMQ就算挂了，重启后也能恢复数据
+
+(3)消费者丢数据
+消费者丢数据一般是因为采用了自动确认消息模式。这种模式下，消费者会自动确认收到信息。这时rahbitMQ会立即将消息删除，这种情况下如果消费者出现异常而没能处理该消息，就会丢失该消息。
+至于解决方案，采用手动确认消息即可。
+
+kafka
+这里先引一张kafka Replication的数据流向图
+Producer在发布消息到某个Partition时，先通过ZooKeeper找到该Partition的Leader，然后无论该Topic的Replication Factor为多少（也即该Partition有多少个Replica），Producer只将该消息发送到该Partition的Leader。Leader会将该消息写入其本地Log。每个Follower都从Leader中pull数据。
+
+针对上述情况，得出如下分析
+(1)生产者丢数据
+在kafka生产中，基本都有一个leader和多个follwer。follwer会去同步leader的信息。因此，为了避免生产者丢数据，做如下两点配置
+
+第一个配置要在producer端设置acks=all。这个配置保证了，follwer同步完成后，才认为消息发送成功。
+
+在producer端设置retries=MAX，一旦写入失败，这无限重试
+
+(2)消息队列丢数据
+针对消息队列丢数据的情况，无外乎就是，数据还没同步，leader就挂了，这时zookpeer会将其他的follwer切换为leader,那数据就丢失了。针对这种情况，应该做两个配置。
+
+replication.factor参数，这个值必须大于1，即要求每个partition必须有至少2个副本
+
+min.insync.replicas参数，这个值必须大于1，这个是要求一个leader至少感知到有至少一个follower还跟自己保持联系
+
+这两个配置加上上面生产者的配置联合起来用，基本可确保kafka不丢数据
+
+(3)消费者丢数据
+这种情况一般是自动提交了offset，然后你处理程序过程中挂了。kafka以为你处理好了。再强调一次offset是干嘛的
+offset：指的是kafka的topic中的每个消费组消费的下标。简单的来说就是一条消息对应一个offset下标，每次消费数据的时候如果提交offset，那么下次消费就会从提交的offset加一那里开始消费。
+比如一个topic中有100条数据，我消费了50条并且提交了，那么此时的kafka服务端记录提交的offset就是49(offset从0开始)，那么下次消费的时候offset就从50开始消费。
+解决方案也很简单，改成手动提交即可。
+
+ActiveMQ和RocketMQ
+大家自行查阅吧
+--------------------- 
+作者：一页知秋否 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_39470733/article/details/80576013 
+版权声明：本文为博主原创文章，转载请附上博文链接！
+
+4.消息队列使用场景
+https://blog.csdn.net/kingcat666/article/details/78660535
+
+5.JMS消息服务
+讲消息队列就不得不提JMS 。JMS（JAVA Message Service，java消息服务）API是一个消息服务的标准/规范，允许应用程序组件基于JavaEE平台创建、发送、接收和读取消息。它使分布式通信耦合度更低，消息服务更加可靠以及异步性。
+在EJB架构中，有消息bean可以无缝的与JM消息服务集成。在J2EE架构模式中，有消息服务者模式，用于实现消息与应用直接的解耦。
+
+4.1消息模型
+在JMS标准中，有两种消息模型P2P（Point to Point）,Publish/Subscribe(Pub/Sub)。
+
+4.1.1 P2P模式
+
+P2P模式包含三个角色：消息队列（Queue），发送者(Sender)，接收者(Receiver)。每个消息都被发送到一个特定的队列，接收者从队列中获取消息。队列保留着消息，直到他们被消费或超时。
+
+P2P的特点
+每个消息只有一个消费者（Consumer）(即一旦被消费，消息就不再在消息队列中)
+发送者和接收者之间在时间上没有依赖性，也就是说当发送者发送了消息之后，不管接收者有没有正在运行，它不会影响到消息被发送到队列
+接收者在成功接收消息之后需向队列应答成功 
+如果希望发送的每个消息都会被成功处理的话，那么需要P2P模式。
+
+4.1.2 Pub/Sub模式
+
+包含三个角色主题（Topic），发布者（Publisher），订阅者（Subscriber） 多个发布者将消息发送到Topic，系统将这些消息传递给多个订阅者。
+
+Pub/Sub的特点
+每个消息可以有多个消费者
+发布者和订阅者之间有时间上的依赖性。针对某个主题（Topic）的订阅者，它必须创建一个订阅者之后，才能消费发布者的消息
+为了消费消息，订阅者必须保持运行的状态
+为了缓和这样严格的时间相关性，JMS允许订阅者创建一个可持久化的订阅。这样，即使订阅者没有被激活（运行），它也能接收到发布者的消息。
+如果希望发送的消息可以不被做任何处理、或者只被一个消息者处理、或者可以被多个消费者处理的话，那么可以采用Pub/Sub模型。
+
+4.2消息消费
+在JMS中，消息的产生和消费都是异步的。对于消费来说，JMS的消息者可以通过两种方式来消费消息。
+（1）同步
+订阅者或接收者通过receive方法来接收消息，receive方法在接收到消息之前（或超时之前）将一直阻塞；
+
+（2）异步
+订阅者或接收者可以注册为一个消息监听器。当消息到达之后，系统自动调用监听器的onMessage方法。
+
+JNDI：Java命名和目录接口,是一种标准的Java命名系统接口。可以在网络上查找和访问服务。通过指定一个资源名称，该名称对应于数据库或命名服务中的一个记录，同时返回资源连接建立所必须的信息。
+JNDI在JMS中起到查找和访问发送目标或消息来源的作用。
+
+5.springmvc整合activeMq
+https://blog.csdn.net/bjjoy2009/article/details/53984345
+springboot整合activeMq
+https://www.cnblogs.com/shamo89/p/8010660.html
+https://www.cnblogs.com/ll409546297/p/7805072.html
+
+6.rabbitMQ
+http://www.cnblogs.com/dwlsxj/p/RabbitMQ.html
+https://www.cnblogs.com/jun-ma/p/4840869.html
+https://www.cnblogs.com/jun-ma/p/4840869.html
+
+7.zookeeper
+ZooKeeper是一个开放源码的分布式应用程序协调服务，它包含一个简单的原语集，分布式应用程序可以基于它实现同步服务，配置维护和命名服务等
+ZooKeeper是一个分布式的，开放源码的分布式应用程序协调服务，是Google的Chubby一个开源的实现，它是集群的管理者，监视着集群中各个节点的状态根据节点提交的反馈进行下一步合理操作。
+最终，将简单易用的接口和性能高效、功能稳定的系统提供给用户
+https://www.cnblogs.com/felixzh/p/5869212.html
+https://www.cnblogs.com/raphael5200/p/5285583.html

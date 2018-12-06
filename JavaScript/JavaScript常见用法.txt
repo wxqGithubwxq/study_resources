@@ -1,6 +1,31 @@
-1.按钮置灰不可点击
+﻿1.按钮置灰不可点击
 在html上写上onclick事件,在js里写似乎不可行,
 $("#project-tijiao").attr('disabled', true);
 $("#project-tijiao").removeAttr("onclick");
 https://blog.csdn.net/fationyyk/article/details/51333336
 https://www.cnblogs.com/nana-share/p/4886340.html
+
+2.jquery监听变量变化
+https://www.cnblogs.com/jimaww/p/9719634.html
+var a = { watchValue:0 };
+var lastTimeValue=a.watchValue;
+Object.defineProperty(a, 'watchValue', {
+  get: function() {
+    console.log('get：' + watchValue);
+    return watchValue;
+  },
+  set: function(value) {
+    watchValue = value;
+    if(lastTimeValue!=watchValue){
+        lastTimeValue=watchValue;
+        console.log('value changed!! set: ' + watchValue);
+    }
+  }
+});
+
+结果如下：
+
+a.watchValue = 2; // value changed!! set: 2
+console.log(a.watchValue);// get：2
+
+好文要顶 关注我 收藏该文   
