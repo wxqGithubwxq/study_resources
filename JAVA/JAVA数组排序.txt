@@ -1,0 +1,16 @@
+1.java 8 对JSONArray 按指定字段排序，升序和倒序，经典
+首先要得到一个jsonArray对象
+
+升序拍法
+
+staffArray.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigDecimal("orderAmt")));
+降序排列
+
+staffArray.sort(Comparator.comparing(obj -> ((JSONObject) obj).getBigDecimal("orderAmt")).reversed());
+
+我的是根据钱的金额大小来比较，还可以根据你自定义属性来比较，很方便的
+--------------------- 
+作者：王源CSDN 
+来源：CSDN 
+原文：https://blog.csdn.net/weixin_37909363/article/details/81508768 
+版权声明：本文为博主原创文章，转载请附上博文链接！
