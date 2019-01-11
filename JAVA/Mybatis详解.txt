@@ -1,0 +1,24 @@
+1.mybatis批量更新
+https://www.cnblogs.com/exmyth/p/5757137.html
+
+2.mybatis 参数为list时，校验list是否为空， mybatis ${}与#{}的区别
+https://blog.csdn.net/pingguowang/article/details/44491777
+一、参数list时，先判断是否为空，否则会报错。
+
+
+
+二、mybatis ${}与#{}的区别
+
+简单来说#{} 解析的是占位符？可以防止SQL注入，
+ 比如打印出来的语句 select *　from table where id=?
+
+然而${} 则是不能防止SQL注入打印出来的语句 select *　from table where id=2  实实在在的参数。
+
+最简单的区别就是${}解析穿过来的参数值不带单引号，#{}解析传过来参数带单引号。
+
+最后总结一下必须使用$引用参数的情况，那就是参数的int型的时候，必须使用$引用。
+--------------------- 
+作者：王廷国 
+来源：CSDN 
+原文：https://blog.csdn.net/pingguowang/article/details/44491777 
+版权声明：本文为博主原创文章，转载请附上博文链接！

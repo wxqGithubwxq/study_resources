@@ -140,3 +140,7 @@ EXIT，GRANT，NOAUDIT，QUIT，REVOKE，RENAME。
 系统将自动进行提交，这就是自动提交。其格式为：
 SQL>SET AUTOCOMMIT ON；
 (4)自动提交若把AUTOCOMMIT设置为ON，则在插入、修改、删除语句执行后，系统将自动进行提交，这就是自动提交。其格式为：SQL>SET AUTOCOMMIT ON；
+
+
+mysql和oracle中的dual表
+https://javawangbaofeng.iteye.com/blog/2242694

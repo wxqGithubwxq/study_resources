@@ -1,0 +1,6 @@
+﻿1.cachput注解设置缓存时间
+https://segmentfault.com/q/1010000015203664/a-1020000015209787
+
+2.批量模糊删除  用到了切面的知识
+https://www.jb51.net/article/134394.htm
+但由于 @CacheEvict 注解使用的是key-value的，不支持模糊删除，就会遇到问题

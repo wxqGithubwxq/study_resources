@@ -51,3 +51,9 @@ https://blog.csdn.net/wwh578867817/article/details/51736723
 mysql默认是autocommit=1自动提交的,set autocommit=0关闭自动提交对ddl和dcl语句不起效,二者语句会在执行前后分别提交事务;
 在set autocommit=0后一定要显示提交commit 和set autocommit=1,但与java spring等开源数据库事务集成时,框架底层会做一些处理,比如说开启事务前先关闭自动提交,事务结束时提交和开启自动提交,
 可能每一个框架机制会有点不同,不过大同小异,总的来说,都趋于一致.
+
+综上，
+
+因为MySQL的可重复读，对事务B进行查询时，事务A提交的更新不会影响到事务B。
+
+但是对事务B进行更新时，事务A提交的更新会影响到事务B
