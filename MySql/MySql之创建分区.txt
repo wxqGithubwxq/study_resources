@@ -1,0 +1,2 @@
+MySql每天自动增加分区:
+https://www.cnblogs.com/lanceblog/p/5532068.html

@@ -1,0 +1,7 @@
+1.服务器连接时间设置
+https://www.cnblogs.com/andyfengzp/p/6434125.html
+2.拦截路径细微区别
+https://blog.csdn.net/aeroleo/article/details/77921975
+3.nginx配置websocket ws wss请求拦截
+https://www.cnblogs.com/lxwphp/p/8206269.html
+https://blog.csdn.net/weixin_40576403/article/details/78684078

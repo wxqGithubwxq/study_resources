@@ -1,0 +1,16 @@
+1.查看ip地址
+ifconfig 或 ip addr
+
+2.查看端口是否监听
+netstat -tnl
+
+3.vi 进入文件编辑 insert编辑文件 esc退出文件编辑 :wq退出并保存 :q!强制退出不保存
+vi和vim都是Linux中的编辑器，不同的是vim比较高级，可以视为vi的升级版本。vi使用于文本编辑，但是vim更适用于coding
+
+4.rpm -e --nodeps 删除文件
+
+5.tar -zxvf 解压当前文件到当前目录
+
+6.source 修改了文件后使之立刻生效，而不用重新登录；
+
+7.查询进程 ps -ef|grep 进程名称或者进程号
