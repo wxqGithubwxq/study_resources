@@ -1,2 +1,5 @@
-MySql每天自动增加分区:
+1.MySql每天自动增加分区:
 https://www.cnblogs.com/lanceblog/p/5532068.html
+
+2.mysql分区表 查询分区的数据行数与实际不符
+https://bbs.csdn.net/topics/392144566

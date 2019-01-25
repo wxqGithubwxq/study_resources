@@ -4,3 +4,10 @@ https://segmentfault.com/q/1010000015203664/a-1020000015209787
 2.批量模糊删除  用到了切面的知识
 https://www.jb51.net/article/134394.htm
 但由于 @CacheEvict 注解使用的是key-value的，不支持模糊删除，就会遇到问题
+
+3.redis里的score
+scroe指的就是该有序集合成员的次序。默认从小到大
+
+4.redis如何做延迟队列
+https://blog.csdn.net/simongeek/article/details/78749107
+https://www.cnblogs.com/peachyy/p/7398430.html

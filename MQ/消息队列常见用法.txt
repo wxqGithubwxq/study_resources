@@ -1,0 +1,17 @@
+1.幂等性
+https://www.cnblogs.com/leechenxiang/p/6626629.html
+在编程中一个幂等操作的特点是其任意多次执行所产生的影响均与一次执行的影响相同
+
+2.消息队列常见问题(消息重复消费 消息丢失)
+https://blog.csdn.net/qq_39470733/article/details/80576013
+
+3.activemq 基于spring的java实现 点对点和发布/订阅者模式
+https://blog.csdn.net/songfeihu0810232/article/details/78648706
+而我们发送的queue消息在未被消费前会被保存。 
+这样的话，就会有个问题，那就是如果发送topic消息时没有消费者，那么这条消息便不复存在了，不会再被消费了。因此我们要想消息不会被遗失掉，我们要先打开消费者，然后再发送topic消息。 
+我们来写消费topic消息的方法，如下图所示，该方法与我们上文学习的消费队列消息的方法不同的是创建Destination的时候不一样，同时为了模拟多个消费者，在该方法中添加一条输出信息，标明该方法是第几个消费者。 
+--------------------- 
+作者：李阿昀 
+来源：CSDN 
+原文：https://blog.csdn.net/yerenyuan_pku/article/details/72989162 
+版权声明：本文为博主原创文章，转载请附上博文链接！
