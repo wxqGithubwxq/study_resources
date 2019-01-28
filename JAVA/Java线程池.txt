@@ -1,0 +1,9 @@
+1.java线程池概念
+https://www.cnblogs.com/dolphin0520/p/3932921.html
+
+2.基于springboot的线程池管理
+https://www.cnblogs.com/achengmu/p/8137276.html
+
+3.并发与并行  异步与多线程之间的细微区别
+https://blog.csdn.net/qiuyubo1/article/details/80288525
+https://blog.csdn.net/qq_27825451/article/details/78853119
