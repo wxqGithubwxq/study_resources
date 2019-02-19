@@ -1,0 +1,47 @@
+1.类加载机制
+https://www.cnblogs.com/ITtangtang/p/3978102.html
+https://www.cnblogs.com/aspirant/p/7200523.html
+https://blog.csdn.net/w8827130/article/details/82313612
+https://www.cnblogs.com/codefeng/p/8598050.html
+
+2.bean的声明周期
+https://www.cnblogs.com/kenshinobiy/p/4652008.html
+https://www.jb51.net/article/136825.htm
+
+3.spring的bean在什么时候被实例化
+Spring什么时候实例化bean，首先要分2种情况 
+  第一：如果你使用BeanFactory作为Spring Bean的工厂类，则所有的bean都是在第一次使用该Bean的时候实例化 
+  第二：如果你使用ApplicationContext作为Spring Bean的工厂类，则又分为以下几种情况： 
+       （1）：如果bean的scope是singleton的，并且lazy-init为false（默认是false，所以可以不用设置），则ApplicationContext启动的时候就实例化该Bean，并且将实例化的Bean放在一个map结构的缓存中，下次再使用该Bean的时候，直接从这个缓存中取 
+       （2）：如果bean的scope是singleton的，并且lazy-init为true，则该Bean的实例化是在第一次使用该Bean的时候进行实例化 
+       （3）：如果bean的scope是prototype的，则该Bean的实例化是在第一次使用该Bean的时候进行实例化
+
+分类: Spring
+
+4.Spring和Spring MVC包分开扫描原因
+https://blog.csdn.net/l_d_y_k/article/details/78564224
+首先配置的是Spring容器的初始化加载的application文件，然后是SpringMVC的前端控制器（DispatchServlet），当配置完DispatchServlet后会在Spring容器中创建一个新的容器。其实这是两个容器，Spring作为父容器，SpringMVC作为子容器。
+注意:父容器不能访问子容器对象,而子容器可以访问父容器对象
+
+5.nginx反向代理服务器实现负载均衡和动静分离
+https://blog.csdn.net/qq_42342242/article/details/80639884
+反向代理的作用
+
+1、防止主服务器被恶意攻击
+
+2、为负载均衡和动静分离提供实现支持
+
+负载均衡：使用反向代理同时代理多个相同内容的应用服务器（比如tomcat），将客户端请求分发到各个应用服务器上并接收响应返回给客户端
+
+负载均衡的作用：当一台服务器的单位时间内的访问量越大时，服务器压力就越大，大到超过自身承受能力时，服务器就会崩溃。为了避免服务器崩溃，让用户有更好的体验，我们通过负载均衡的方式来分担服务器压力。我们可以建立很多很多服务器，组成一个服务器集群，当用户访问网站时，先访问一个中间服务器，在让这个中间服务器在服务器集群中选择一个压力较小的服务器，然后将该访问请求引入该服务器。如此一来，用户的每次访问，都会保证服务器集群中的每个服务器压力趋于平衡，分担了服务器压力，避免了服务器崩溃的情况。
+
+动静分离：运用Nginx的反向代理功能分发请求：所有动态资源的请求交给应用服务器，而静态资源的请求（例如图片、视频、CSS、JavaScript文件等）则直接由Nginx返回到浏览器
+
+动静分离的作用：主要是nginx处理静态页面的效率远高于tomcat的处理能力，使用c语言开发的nginx对静态资源每秒的吞吐量是使用Java语言开发的tomcat的6倍，也远高于其它应用服务器
+
+总而言之：nginx应用之所以广泛，我认为这归功于它的灵活配置，一个nginx.conf文件解决大部分问题，不论是nginx创建虚拟服务器、nginx的反向代理服务器，还是nginx的负载均衡，几乎都在这个配置文件中进行。服务器上只负责把nginx搭好，跑起来即可。而且它本身轻量级，不需要占用服务器太多资源就可以达到较好的效果，是一个非常值得推崇的服务器。
+--------------------- 
+作者：qq_42342242 
+来源：CSDN 
+原文：https://blog.csdn.net/qq_42342242/article/details/80639884 
+版权声明：本文为博主原创文章，转载请附上博文链接！

@@ -16,3 +16,10 @@ https://baijiahao.baidu.com/s?id=1604758037124057317&wfr=spider&for=pc
 
 5.refreshing vcs history
 idea提示这个信息意味着svn或git地址连接不上
+
+6.idea编译和打包war包
+https://blog.csdn.net/yushanddddfenghailin/article/details/79738212
+
+7.idea中artifacts下的war和war exploded包的区别
+https://blog.csdn.net/u011325464/article/details/80173659
+
