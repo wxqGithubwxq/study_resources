@@ -119,3 +119,9 @@ JMM Java内存模型：
 8.jdk jre jvm三者之间的区别
 https://blog.csdn.net/ancientear/article/details/79483592
 https://www.cnblogs.com/yangming1996/p/8508187.html
+
+9.jvm是如何运行jar包的
+https://blog.csdn.net/m0_37742084/article/details/80151752
+
+10.jvm安全点和安全域
+https://www.cnblogs.com/ridox/p/3646381.html

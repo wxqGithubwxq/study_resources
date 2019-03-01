@@ -1,0 +1,21 @@
+1.idea启动项目后,为什么不能访问tomcat主页
+https://www.cnblogs.com/yayazi/p/7920257.html
+该问题出现的原因是：我们的项目的工件输出目录在我们指定的目录下，而不是在安装的tomcat的Apache-tomcat的webapps的目录下。
+
+IDEA在“项目目录\out\artifacts”下虚拟了一个Tomcat，而在该目录下又没有Tomcat首页的工程。而此时并没有把Tomcat首页的工程部署到服务器，所以就访问不到Tomcat首页，而访问到的是我们项目里的其他页面信息。 
+
+解决办法
+
+解决方法是将Tomcat的首页的工程部署到Tomcat服务器上，部署步骤如下：
+
+选择菜单栏“Run-->Edit Configuration...-->Deployment”,选择右上角绿色“+”，选择“External Source...”，将Apache-tomcat的webapps目录下的ROOT文件夹选中，点击OK，及完成Tomcat的首页的工程的部署。选择ROOT文件后右侧Application Context 可不填写，默认即可。
+
+需要注意的是:此时访问的端口是idea里面配置的端口号
+
+
+2.如何开启多个tomcat实例
+https://blog.csdn.net/jing12062011/article/details/77282174
+注意事项:
+(1)需要多个解压版tomcat;
+(2)修改近乎所有(建议所有)的端口,保持不被占用;
+(3)如果有配环境变量,需要为每一个tomcat配置环境变量,并且修改每一个tomcat的startup.bat中的tomcat环境变量名字,要么就都不配置环境变量,这由startup.bat启动程序代码所决定了;
