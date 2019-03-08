@@ -1,0 +1,12 @@
+1.登入相关问题
+同一个浏览器不同会话窗口访问同一个网站 得到的sessionid是一样的
+request.getSession().invalidate();会使session失效,并重新登入网站时重新生成新的sessionid
+//
+可以根据sessionid去判断浏览器的多窗口登入,从而达到一个浏览器只能有一个账号可以登录网站
+//
+对于异地登入或者是不同浏览器窗口可以采取强制登入措施,保证同一时间只能有一个账号登入,可以采取在登录成功时建立websocket通讯,记录登录信息并验证是否已存在登录的情况
+//
+需要将sessionid信息存入redis并设置session和redis失效时间,验证顺序应该满足先验证浏览器的多窗口登录,再验证异地登录
+
+jsonp实现跨域请求
+https://www.cnblogs.com/chiangchou/p/jsonp.html

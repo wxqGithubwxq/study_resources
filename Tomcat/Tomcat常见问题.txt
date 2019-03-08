@@ -19,3 +19,6 @@ https://blog.csdn.net/jing12062011/article/details/77282174
 (1)需要多个解压版tomcat;
 (2)修改近乎所有(建议所有)的端口,保持不被占用;
 (3)如果有配环境变量,需要为每一个tomcat配置环境变量,并且修改每一个tomcat的startup.bat中的tomcat环境变量名字,要么就都不配置环境变量,这由startup.bat启动程序代码所决定了;
+
+3.tomcat指定war包路径部署
+https://blog.csdn.net/liuyongheng1991/article/details/80772761

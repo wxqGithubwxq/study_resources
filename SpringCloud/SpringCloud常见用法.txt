@@ -42,3 +42,8 @@
 来源：CSDN 
 原文：https://blog.csdn.net/cyc3552637/article/details/80254490 
 版权声明：本文为博主原创文章，转载请附上博文链接！
+
+3.host(主机域名配置) windows:C:\Windows\System32\drivers\etc\hosts linux:/etc/hosts
+
+4.idea快速搭建springcloud项目
+https://blog.csdn.net/a1406075864/article/details/80191343

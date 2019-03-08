@@ -125,3 +125,14 @@ https://blog.csdn.net/m0_37742084/article/details/80151752
 
 10.jvm安全点和安全域
 https://www.cnblogs.com/ridox/p/3646381.html
+
+11.机器码和字节码的区别
+https://blog.csdn.net/qq_32625839/article/details/80909441
+https://www.cnblogs.com/qiumingcheng/p/5400265.html
+字节码文件（Java中是16进制文件）是经过编译器预处理过的一种文件，是Java的执行文件存在形式，它本身是二进制文件，但是不可以被系统直接执行，而是需要虚拟机解释执行。
+
+12.类加载机制有哪些流程:
+加载--验证--准备--解析--初始化--使用--卸载
+
+13.类加载器执行先后顺序:
+启动类加载器Bootstrap ClassLoader--扩展类加载器Extension ClassLoader--应用程序类加载器Application ClassLoader--自定义类加载器User ClassLoader
