@@ -47,3 +47,16 @@
 
 4.idea快速搭建springcloud项目
 https://blog.csdn.net/a1406075864/article/details/80191343
+
+5.eureka配置参数说明
+https://blog.csdn.net/Michaelwubo/article/details/81353665
+
+6.spring cloud eureka自我保护机制 心跳检测 服务续租
+https://blog.csdn.net/qq_43253123/article/details/82871149
+
+7.spring cloud熔断机制 路由器 Hystrix feign(ribbon+hystrix)
+https://www.cnblogs.com/chry/p/7279856.html
+
+8.spring cloud 网关服务器
+https://blog.csdn.net/smartdt/article/details/79043282
+https://www.cnblogs.com/qdhxhz/p/9594521.html

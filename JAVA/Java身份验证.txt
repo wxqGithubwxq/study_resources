@@ -1,0 +1,9 @@
+1.spring security
+https://www.jb51.net/article/140429.htm
+https://www.cnblogs.com/wutianqi/p/9186645.html
+
+2.shiro
+https://blog.csdn.net/qq_28525573/article/details/79101540
+https://www.cnblogs.com/strinkbug/p/6139393.html
+
+3.oauth2
