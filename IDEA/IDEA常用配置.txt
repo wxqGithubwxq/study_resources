@@ -23,3 +23,6 @@ https://blog.csdn.net/yushanddddfenghailin/article/details/79738212
 7.idea中artifacts下的war和war exploded包的区别
 https://blog.csdn.net/u011325464/article/details/80173659
 
+8.idea上传git新建项目
+https://www.cnblogs.com/jinjiyese153/p/6796668.html
+

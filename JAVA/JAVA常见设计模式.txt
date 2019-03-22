@@ -849,6 +849,9 @@ https://www.cnblogs.com/zhihyuan0420/articles/5684603.html
 
 9.策略模式
 https://www.cnblogs.com/java-my-life/archive/2012/05/10/2491891.html
+spring下实现策略模式
+https://blog.csdn.net/genius0182/article/details/79070051
+https://www.jianshu.com/p/5ccf1706297d
 
 10.桥接模式
 桥接模式(Bridge Pattern)：将抽象部分与它的实现部分分离，使它们都可以独立地变化。它是一种对象结构型模式，又称为柄体(Handle and Body)模式或接口(Interface)模式。
@@ -1003,3 +1006,8 @@ https://www.cnblogs.com/lfxiao/p/6815760.html
 
 11.适配器模式
 https://www.cnblogs.com/V1haoge/p/6479118.html
+
+12.状态模式
+根据状态改变对象的行为
+https://www.cnblogs.com/WJQ2017/p/7746873.html
+https://blog.csdn.net/lm324114/article/details/78819602
