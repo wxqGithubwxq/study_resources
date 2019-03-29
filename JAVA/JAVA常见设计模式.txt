@@ -1007,6 +1007,7 @@ https://www.cnblogs.com/lfxiao/p/6815760.html
 11.适配器模式
 https://www.cnblogs.com/V1haoge/p/6479118.html
 
+
 12.状态模式
 根据状态改变对象的行为
 https://www.cnblogs.com/WJQ2017/p/7746873.html
