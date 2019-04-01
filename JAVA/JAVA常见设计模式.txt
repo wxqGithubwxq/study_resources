@@ -1012,3 +1012,6 @@ https://www.cnblogs.com/V1haoge/p/6479118.html
 根据状态改变对象的行为
 https://www.cnblogs.com/WJQ2017/p/7746873.html
 https://blog.csdn.net/lm324114/article/details/78819602
+
+13.观察者模式
+https://www.cnblogs.com/fingerboy/p/5468994.html
