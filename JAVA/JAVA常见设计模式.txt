@@ -1,4 +1,4 @@
-1.jdk动态代理和cglib动态代理的区别 
+﻿1.jdk动态代理和cglib动态代理的区别 
 https://www.cnblogs.com/bigmonkeys/p/7823268.html
 https://www.cnblogs.com/waves-a/p/8036857.html
 https://blog.csdn.net/qq_27093465/article/details/53340513
@@ -1015,3 +1015,6 @@ https://blog.csdn.net/lm324114/article/details/78819602
 
 13.观察者模式
 https://www.cnblogs.com/fingerboy/p/5468994.html
+
+14.访问者模式
+https://www.jianshu.com/p/80b9cd7c0da5
