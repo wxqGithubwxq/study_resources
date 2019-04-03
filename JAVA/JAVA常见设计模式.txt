@@ -1017,4 +1017,9 @@ https://blog.csdn.net/lm324114/article/details/78819602
 https://www.cnblogs.com/fingerboy/p/5468994.html
 
 14.访问者模式
+https://www.cnblogs.com/edisonchou/p/7247990.html
 https://www.jianshu.com/p/80b9cd7c0da5
+
+15.备忘录模式
+https://www.cnblogs.com/liuzhen1995/p/6047015.html
+https://www.cnblogs.com/Bobby0322/p/4195735.html
