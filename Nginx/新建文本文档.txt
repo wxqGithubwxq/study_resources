@@ -1,0 +1,39 @@
+1.windows下常用命令
+启动命令 直接点击nginx下的nginx命令 或者cmd到nginx目录下 通过 start nginx命令启动(窗口一闪而过 代表启动成功)
+
+关闭
+nginx -s stop 表示立即停止nginx,不保存相关信息
+nginx -s quit 表示正常退出nginx,并保存相关信息
+
+重启(因为改变了配置,需要重启)
+nginx -s reload
+
+
+2.linux下安装nginx时可以指定安装目录
+启动命令
+cd 到nginx目录下的sbin目录 通过./nginx命令启动
+重启命令 
+cd 到nginx目录下的sbin目录 通过./nginx -s reload 命令启动
+停止
+通过 ps -ef | grep nginx 在进程列表里面找master进程,它的编号就是主进程号了
+然后通过
+从容停止nginx:kill -quit 主进程号
+快速停止nginx:kill -term 主进程号
+强制停止nginx:kill -9 主进程号
+另外,若在nginx.conf配置了pid文件存放路径则该文件存放的就是nginx主进程号,如何没指定则放在nginx的logs目录下.
+有了pid文件,我们就不用先查询nginx的主进程号,而直接向nginx发送信号了,命令如下:
+kill 型号类型 '/usr/local/nginx/logs/nginx.pid'
+
+平滑重启
+
+如果更改了配置就要重启Nginx，要先关闭Nginx再打开？不是的，可以向Nginx 发送信号，平滑重启。
+平滑重启命令：
+
+kill -HUP 住进称号或进程号文件路径  
+或者使用
+/usr/nginx/sbin/nginx -s reload  
+注意，修改了配置文件后最好先检查一下修改过的配置文件是否正 确，以免重启后Nginx出现错误影响服务器稳定运行。判断Nginx配置是否正确命令如下：
+
+nginx -t -c /usr/nginx/conf/nginx.conf 
+或者
+/usr/nginx/sbin/nginx -t 

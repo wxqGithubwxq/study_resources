@@ -1,0 +1,9 @@
+1.Spring MVC之@RequestParam @RequestBody @RequestHeader 等详解
+https://www.cnblogs.com/szlbm/p/5867529.html
+
+2.【springmvc】@RequestParam详解以及加与不加的区别
+https://blog.csdn.net/a447332241/article/details/76714148
+
+3.spring使用@RequestBody接受实体类，前端发起http请求，参数传什么？
+spring使用@RequestBody接受实体类
+https://blog.csdn.net/Ideality_hunter/article/details/81774054

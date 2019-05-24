@@ -18,3 +18,37 @@ vi和vim都是Linux中的编辑器，不同的是vim比较高级，可以视为v
 8.curl 查看网站
 
 9.ls 列出当前目录下的文件 ll列出当前目录下文件的详细信息
+
+10.杀进程
+  netstat -apn | grep xxxx
+  kill  xxxx
+
+11.动态查看log
+   tail -f xx.log  
+
+12.打开端口访问权限
+iptables -I INPUT -p tcp --dport 6379 -j ACCEPT
+
+二、部署jar项目
+1、创建目录 makdir  app
+2、创建日志文touch log.txt
+3、部署jar包 nohup java -jar jar包名称 > log.txt &
+
+比如:
+#! /bin/bash
+touch log/ftes_eureka.log
+nohup java -jar ftes_eureka.jar >> log/ftes_eureka.log 2>&1 &
+touch log/ftes_gateway.log
+nohup java -jar ftes_gateway.jar >> log/ftes_gateway.log 2>&1 &
+touch log/ftes_base.log
+nohup java -jar ftes_base.jar >> log/ftes_base.log 2>&1 &
+touch log/ftes_exam.log
+nohup java -jar ftes_exam.jar >> log/ftes_exam.log 2>&1 &
+touch log/ftes_theory.log
+nohup java -jar ftes_theory.jar >> log/ftes_theory.log 2>&1 &
+touch log/ftes_paper.log
+nohup java -jar ftes_paper.jar >> log/ftes_paper.log 2>&1 &
+
+13.关闭防火墙
+centos7之前通过 service iptables stop 关闭
+centos7之后通过 service firewalld stop 关闭

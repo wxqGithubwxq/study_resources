@@ -1094,3 +1094,7 @@ class Solution {
     }
     
 }
+
+20.责任链模式
+https://www.cnblogs.com/ysw-go/p/5432921.html
+https://www.jianshu.com/p/198a29556f30
