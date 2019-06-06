@@ -1,2 +1,18 @@
 1.linux和windows下表名和字段名是否区分大小写
 https://blog.csdn.net/who_is_xiaoming/article/details/53200573
+
+2.修改wait_timeout interactive_timeout区别 生效问题
+https://blog.csdn.net/weixin_34191734/article/details/86440079
+
+show global  VARIABLES like '%timeout%'
+
+show VARIABLES like '%timeout%'
+
+show VARIABLES like '%connection%'
+
+show full PROCESSLIST
+
+28800
+
+set global interactive_timeout=2000;
+set GLOBAL wait_timeout = 2000;

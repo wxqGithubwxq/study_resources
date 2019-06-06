@@ -3,3 +3,16 @@ https://blog.csdn.net/Connie1451/article/details/79875835
 
 2.打包jar包
 https://blog.csdn.net/smilecall/article/details/56288972/
+
+3.springboot 日志输出
+关于 spring boot 日志文件路径的疑惑?
+ 同时配置了logging.path和logging.file属性,如下配置:
+   logging:
+	path:/var/log
+	file:test.log
+仅仅只会在项目根路径下产生test.log文件,不会在指定路径下产生日志文件(期望日志路径
+为:logging.path+logging.file).
+原因:spring boot中的logging.path 和 logging.file 这两个属性,只需要配置其中之一即可,
+如果同时配置,则使用logging.file属性.
+当配置了logging.path属性,将在该路径下生成spring.log文件,即此时使用默认的日志文件名spring.log
+当配置了logging.file属性时,将在指定路径下生成指定名称的日志文件.默认为项目相对路径,可以为logging.file指定绝对路径

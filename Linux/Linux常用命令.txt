@@ -52,3 +52,16 @@ nohup java -jar ftes_paper.jar >> log/ftes_paper.log 2>&1 &
 13.关闭防火墙
 centos7之前通过 service iptables stop 关闭
 centos7之后通过 service firewalld stop 关闭
+
+14.linux查看系统当前时间并修改时间
+1.查看时间和日期
+命令:"date"
+2.设置时间和日期
+例如:将系统日期设定成2018年6月8日的命令
+命令:"date -s 06/08/2018"
+将系统时间设定成下午10点46分03秒的命令
+命令:"date -s 10:46:03"
+3.将软件时间同步到硬件时间
+hwclock -w  hwclock --systohc (暂不清楚二者的区别,可能跟重启是否失效有关也可能二者是一样的没有区别)
+4.将硬件时间同步到软件时间
+hwclock -s hwclock --hctosys (备注:系统重启后,读取的是硬件时间作为系统时间,然后系统时间作为独立时间单独运行直到系统关闭)

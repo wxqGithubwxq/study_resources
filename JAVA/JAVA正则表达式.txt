@@ -20,3 +20,6 @@ this\s+is\s+text
 https://www.cnblogs.com/jun9207/p/5191857.html
 https://blog.csdn.net/ydxzmhy/article/details/51143269
 https://www.jb51.net/article/91952.htm
+
+3.^/image/view/static/(.*)\.(jpg|png)$
+匹配以/image/view/static开头,并且以.jpg和.png结尾的图片

@@ -28,3 +28,6 @@ https://www.cnblogs.com/jinjiyese153/p/6796668.html
 
 9.IntelliJ IDEA中如何设置同时打开多个文件且分行显示？
 https://www.cnblogs.com/jeffen/p/6010819.html
+
+10.idea设置背景图片
+http://www.zuidaima.com/blog/3707545394678784.htm
