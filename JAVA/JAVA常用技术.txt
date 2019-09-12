@@ -44,3 +44,10 @@ https://www.cnblogs.com/tugenhua0707/p/8648044.html
 https://www.cnblogs.com/1wen/p/5808276.html
 https://blog.csdn.net/sunshine_silence/article/details/79642282
 https://blog.csdn.net/u014792342/article/details/79076770(个人觉得完美解决断电断网问题)
+
+9.java lambda表达式
+https://www.cnblogs.com/nnxud/p/9827704.html
+https://www.cnblogs.com/JohnsonLiu/p/9863309.html
+
+10.java8新特性：利用Lambda处理List集合
+https://www.cnblogs.com/JoeyWong/p/9600109.html

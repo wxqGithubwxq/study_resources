@@ -3,3 +3,17 @@ https://www.cnblogs.com/lwbqqyumidi/p/3837629.html
 泛型的类型参数只能是类类型，不能是简单类型。
 不能对确切的泛型类型使用instanceof操作。如下面的操作是非法的，编译时会出错。
 　　if(ex_num instanceof Generic<Number>){ }
+https://www.cnblogs.com/jpfss/p/9928747.html
+
+
+
+可变参数
+注意事项：
+
+  1）不定项参数必须放在参数列表最后一个。
+
+  2）不定项参数只能有一个（多个，必然有一个不是最后一个）。
+
+  3）重载时，运行优先级问题。
+  
+  确定参数的方法优先级高于不定项参数的方法

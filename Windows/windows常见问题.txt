@@ -1,2 +1,5 @@
-1.系统下载
+﻿1.系统下载
 https://msdn.itellyou.cn/(纯净版)
+
+2.winrar压缩文件图标不显示并且右键菜单没有添加压缩包选项
+https://jingyan.baidu.com/article/fea4511a11235bf7bb91252b.html

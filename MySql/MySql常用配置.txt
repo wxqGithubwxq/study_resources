@@ -14,5 +14,6 @@ show full PROCESSLIST
 
 28800
 
+SET GLOBAL max_connections=200;
 set global interactive_timeout=2000;
-set GLOBAL wait_timeout = 2000;
+set global wait_timeout = 2000;
