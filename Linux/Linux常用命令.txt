@@ -65,3 +65,42 @@ centos7之后通过 service firewalld stop 关闭
 hwclock -w  hwclock --systohc (暂不清楚二者的区别,可能跟重启是否失效有关也可能二者是一样的没有区别)
 4.将硬件时间同步到软件时间
 hwclock -s hwclock --hctosys (备注:系统重启后,读取的是硬件时间作为系统时间,然后系统时间作为独立时间单独运行直到系统关闭)
+
+
+15.关闭防火墙
+chkconfig iptables off	服务里关闭功能
+service iptables stop   关闭服务
+
+问题:老是关闭防火墙太麻烦，所以选择彻底关闭防火墙，发现每次都记不住命令!
+
+下面是red hat/CentOs7关闭防火墙的命令!
+
+1:查看防火状态
+
+systemctl status firewalld
+
+service  iptables status
+
+2:暂时关闭防火墙
+
+systemctl stop firewalld
+
+service  iptables stop
+
+3:永久关闭防火墙
+
+systemctl disable firewalld
+
+chkconfig iptables off
+
+4:重启防火墙
+
+systemctl enable firewalld
+
+service iptables restart  
+
+5:永久关闭后重启
+
+//暂时还没有试过
+
+chkconfig iptables on

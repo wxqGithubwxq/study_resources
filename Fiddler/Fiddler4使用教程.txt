@@ -1,2 +1,11 @@
 1.fiddler常用功能介绍
 https://www.cnblogs.com/yyhh/p/5140852.html
+
+2.fiddler拦截请求、响应并修改（使用命令）
+https://blog.csdn.net/qq_41714308/article/details/90411242
+
+3.fiddler 和 浏览器代理的关系
+https://blog.csdn.net/loner_fang/article/details/83308443
+
+4.fiddler 设置filter
+https://blog.csdn.net/yu1014745867/article/details/73222032
